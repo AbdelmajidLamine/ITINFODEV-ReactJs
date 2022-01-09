@@ -1,0 +1,919 @@
+// {/* <DOCTYPE html>
+// <html lang="en">
+//   <head>
+//     <meta charset="utf-8" />
+//     <meta name="viewport" content="width=device-width, initial-scale=1" />
+//     <meta name="theme-color" content="#000000" />
+//     <meta
+//       name="description"
+//       content="Web site created using create-react-app"
+//     />
+//     <link rel="manifest" href="/manifest.json">
+//     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+   
+  
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+   
+//     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+//     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+//     <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
+//     <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+//     <link rel="stylesheet" href="/assets/fonts/fontawesome5-overrides.min.css">
+//     <title>Dashboard - Brand</title>
+//   </head>
+//   <body>
+    
+//     <div id="root"></div>
+
+//      <script src="/assets/js/jquery.min.js"></script> 
+    
+    
+//   <script src="/assets/js/bs-init.js"></script>
+ 
+//    <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script> -->
+    
+//     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+//     <!-- <script src="../assets/js/theme.js"></script> -->
+    
+//     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+//     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+//     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+//     <script src="https://www.paypal.com/sdk/js?&client-id=AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS"></script>
+//   </body>
+// </html>
+
+// <!-- 
+// ///product
+
+// <div className="card-header py-3">
+//   <p className="text-primary m-0 font-weight-bold">Products</p>
+// </div>
+// {!details && <div className="card-body">
+//   <div className="row">
+//       <div className="col-md-6 text-nowrap">
+//           {        /*             <Link to="/adminMain/new-product"  className="btn btn-success" ><i className="fas fa-plus-circle"></i> new product</Link>
+// */}
+//       </div>
+
+//   </div>
+//   <div className="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+//       <table className="table my-0" id="dataTable">
+
+//           <tbody>
+//               {
+//                   products.map(
+//                       product =>
+//                           <tr key={product.id} >
+//                               <td>{product.id}</td>
+//                               <td >{product.name}</td>
+//                               <td>{product.status}</td>
+//                               <td> <div>  <img src={product.image} alt='product img'>
+//                               </img>
+//                               </div></td>
+//                               <td>{product.price} dhs</td>
+//                               <td><button className="btn btn-sm btn-warning" onClick={() => showDetails(product)} >show</button></td>
+//                           </tr>
+//                   )
+//               }
+//           </tbody>
+//       </table>
+//   </div>
+// </div>}
+// {details &&
+//   <div className="card-body">
+//       <table className="table my-0" id="dataTable">
+//           <thead>
+//               <tr>
+//                   <th>Stock</th>
+//                   <th>details</th>
+//               </tr>
+//           </thead>
+//           <tbody>
+//               <tr>
+//                   <td>{product.stock}</td>
+//                   <td>{product.shortDescription}</td>
+//               </tr>
+//           </tbody>
+//       </table>
+//       <button className="btn btn-sm btn-warning " onClick={hideDetails}> returner</button>
+//   </div>
+// }
+// //
+
+// panier 
+
+
+// //   constructor(props) {
+// //     super(props)
+
+// //     this.state = {
+// //       composantPaniers: [] ,
+     
+// //     Panier:[] ,
+// //     PrixTotal:1 ,
+// //     idComposante:16295,
+    
+// //     quantite:1,
+     
+     
+// // }
+    
+// //    this.deleteComposantPanier=this.deleteComposantPanier.bind(this);
+// //    this.changeQuantiteHandler=this.changeQuantiteHandler.bind(this);
+// //    this.editQuantite=this.editQuantite.bind(this);
+ 
+// // }
+
+  
+
+
+
+
+  
+
+// //  deleteComposantPanier (id){
+  
+// //   PanierService.deleteComposantPanier(id).then( res => {
+// //     alert("delete successful");
+// //    this.setState({
+// //      composantPaniers: this.state.composantPaniers.filter(composantPanier => composantPanier.idComposante !== id)
+// //     });
+  
+// //   });
+// // }
+
+     
+ 
+
+// // editQuantite(e){
+// //  e.preventDefault();
+// //  const quantite= 1;
+// //  console.log('quantite =>' + JSON.stringify(quantite));
+// //   PanierService.updateQantiteProduct(16288,quantite);
+// // }
+// // changeQuantiteHandler= (event) => {
+// //   this.setState({quantite: event.target.value});
+// // }
+// // componentDidMount(){
+// //  // var To=0;
+
+// //   PanierService.getAllComposante().then((res) =>
+// //  {
+// //       this.setState({ composantPaniers: res.data});
+// //   });
+
+// //   PanierService.getPanier(this.state.id).then((res) => 
+// //   {
+// //     this.setState({Panier:[...this.state.Panier,res.data]})
+// //   });
+  
+// // }
+// //   constructor(props) {
+// //     super(props)
+// //     this.state = {
+// //       ComposantePaniers: []
+// // }
+// //     this.deleteComposantPanier = this.deleteEmployee.bind(this);
+// // }
+// //  deleteComposantPanier(id){
+// //     PanierService.deleteComposantPanier(id).then( res => {
+// //         this.setState({ComposantePaniers: this.state.ComposantePaniers.filter(Panier => Panier.idPanier !== id)});
+// //     });
+// // }
+
+
+
+
+/////
+
+// import React, { Component, useEffect, useState, } from 'react'
+// import PanierService from "./PanierService";
+// import { Link } from "react-router-dom";
+// import { useHistory } from 'react-router-dom';
+// import NavBar from '../NavBar';
+// import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
+// import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faMinusSquare, faShoppingBag
+// } from "@fortawesome/free-solid-svg-icons";
+// import { Button } from '@material-ui/core';
+// import { number } from '../account/validation';
+
+// function test() {
+
+//   const [composantePaniers, setcomposantPaniers] = useState([]);
+//   const [panier, setPanier] = useState([]);
+//   const [idPanier, setidPanier] = useState(1);
+//   const [composantPanier, setComposantPanier] = useState([]);
+
+
+//   const deleteComposantPanier = (id) => {
+//     PanierService.deleteComposantPanier(id)
+//       .then(response => {
+//         if (response.data != null) {
+//           alert('delet succ!');
+//           PanierService.getAllComposante().then((response) => setcomposantPaniers(response.data));
+
+//         }
+//       })
+
+
+//   }
+//   useEffect(() => {
+
+//     PanierService.getAllComposante().then((response) => setcomposantPaniers(response.data));
+
+//   }, [])
+//   useEffect(() => {
+//     PanierService.getPanier(idPanier).then((response) => setPanier(response.data));
+//   }, []);
+//   const [quantite, setQuantite] = useState();
+
+//   const formData = new FormData();
+//   formData.append("quantite", quantite);
+
+//   const total = sessionStorage.getItem('authenticatedPrixTotal');
+
+//   const [prix, setPrix] = useState(Number(total));
+
+//   const history = useHistory();
+
+//   const addQuantite = (id, q, p) => {
+
+
+//     setQuantite(Number(q + 1))
+//     PanierService.updateQantiteProduct(id, formData)
+//       .then(() => {
+       
+//         setPrix(Number(prix + p));
+//         sessionStorage.setItem('authenticatedPrixTotal', prix)
+//         //   //setR( product.price);
+//         //  // setPriTotal(  (product.price + priTotal));
+
+
+//       }
+//       )
+//     ///setQuantite(q+1);
+//     //updateQantiteProduct(id)
+
+//     // setPrix(Number(prix + p));
+//     // sessionStorage.setItem('authenticatedPrixTotal',prix )
+
+//     // .then(()=>{
+
+//     //   setPrix(Number(prix + p));
+//     //   sessionStorage.setItem('authenticatedPrixTotal',prix )
+//     //   //setR( product.price);
+//     //  // setPriTotal(  (product.price + priTotal));
+
+
+//     //  }
+//     //  )
+
+
+//     //history.push('/product')
+//   }
+
+//   const sousQuantite = (id, v, s) => {
+
+//     setQuantite(Number(v - 1));
+
+//     PanierService.updateQantiteProduct(id, formData)
+//       .then(() => {
+
+//         setPrix(Number(prix - s));
+//         sessionStorage.setItem('authenticatedPrixTotal', prix)
+//         //   //setR( product.price);
+//         //  // setPriTotal(  (product.price + priTotal));
+
+
+//       }
+//       )
+
+//   }
+//   const chekout = (prix) => {
+//     if (prix) {
+//       sessionStorage.setItem('authenticatLoginchekout', prix)
+//       history.push('/SignIn')
+
+//     }
+//   }
+//   const updateQantiteProduct = (id) => {
+
+//     PanierService.updateQantiteProduct(id, formData).then
+//       .then(() => {
+
+//         //   setPrix(Number(prix + p));
+//         //  sessionStorage.setItem('authenticatedPrixTotal',prix )
+//         //   //setR( product.price);
+//         //  // setPriTotal(  (product.price + priTotal));
+
+
+//       }
+//       )
+
+//   }
+
+//   return (
+
+//     <div id="page-top">
+
+//       <NavBar />
+
+//       <Breadcrumbs class=" my-3 nav justify-content-center">
+//         <nav aria-label="breadcrumb">
+//           <ul class="nav justify-content-center">
+//             <li class="nav-item">
+//               <a class="nav-link active" href="/Home" > Home</a>
+//             </li>
+//             <li class="nav-item">
+//               <a class="nav-link disabled">/</a>
+//             </li>
+//             <li class="nav-item">
+//               <a class="nav-link disabled"  >Cart</a>
+//             </li>
+
+//           </ul>
+//         </nav>
+
+//       </Breadcrumbs>
+
+//       <h2 class="my-3 h2 text-center">Cart</h2>
+//       <div id="wrapper">
+
+//         <div className="d-flex flex-column " id="content-wrapper">
+
+//           <div id="content">
+//             <main className="card">
+
+//               <table className="table my-0" id="dataTable">
+//                 <thead>
+//                   <tr>
+//                     <th></th>
+//                     <th></th>
+//                     <th></th>
+//                     <th>PRODUCT</th>
+//                     <th>PRIX</th>
+//                     <th>QUANTITY</th>
+
+//                     <th></th>
+//                   </tr>
+//                 </thead>
+//                 <tbody>
+//                   {
+//                     composantePaniers.map(
+
+
+//                       composantPanier =>
+
+//                         <tr key={composantPanier.id} >
+//                           <td></td>
+//                           <td></td>
+//                           <td> <img src={composantPanier.produit.image} className="img-fluid" alt="hello" /></td>
+//                           <td  >
+//                             <tr> {composantPanier.produit.category.nomCategorie}</tr>
+//                             <tr>{composantPanier.produit.name}</tr>
+//                             <tr>{composantPanier.idComposante}</tr>
+//                           </td>
+//                           <td class="align-middle">
+
+//                             $ {composantPanier.produit.price}
+//                           </td>
+//                           { //total ==composantPanier.panier.prixPanier 
+//                           }
+//                           <td class="align-middle" >
+                            
+//                               <td>
+                          
+//                                 <button className="btn btn-danger  mb-2"
+
+//                                   onClick={() => addQuantite(composantPanier.idComposante, composantPanier.quantite, composantPanier.produit.price)}
+
+//                                 >
+//                                   +
+//                                 </button>
+//                                 </td>
+                              
+//                               <td>
+//                                 <input type="text" className="form-control" defaultValue={composantPanier.quantite} style={{ width: '100px' }}
+//                                 //  onChange={(event)=>setQuantite(event.target.value)}
+//                                 //  onClick={()=>updateQantiteProduct(composantPanier.idComposante)}
+
+//                                 // onChange={()=>updateQantiteProduct(composantPanier.idComposante)}
+//                                 />
+//                               </td>
+//                               <td>
+                             
+//                                 <button className="btn btn-primary mb-2"
+
+//                                   onClick={() => sousQuantite(composantPanier.idComposante, composantPanier.quantite, composantPanier.produit.price)}
+
+//                                 >
+
+//                                   -
+//                                 </button>
+                             
+//                               </td>
+                           
+//                           </td>
+//                           {/* <td>  
+//                             <button className="btn btn-warning mb-2" onClick={()=>updateQantiteProduct(composantPanier.idComposante)}
+//                             ></button>
+//                               </td> */}
+//                           <td>
+
+
+//                           </td>
+//                           <td class="align-middle">
+//                             {/* <Button onClick={()=>deleteComposantPanier(composantPanier.idComposante)}>hyad </Button> */}
+//                             <button className="btn btn-warning mb-2"
+//                               onClick={() => deleteComposantPanier(composantPanier.idComposante)}
+//                             >
+//                               <FontAwesomeIcon className="mr-2"
+//                                 icon={faMinusSquare} /> Remove
+
+//                             </button>
+//                           </td>
+
+//                         </tr>
+
+//                     )
+
+//                   }
+//                 </tbody>
+
+//               </table>
+//             </main>
+//           </div>
+
+//         </div>
+//         <div className="col-xl-3 col-md-12 mb-2  " >
+//           <div class="card " >
+//             <div class="card-body ">
+//               <div class="d-flex justify-content-between p-md-1">
+//                 <div class="d-flex flex-row">
+
+//                   <div>
+//                     <h4>Prix total  </h4>
+//                   </div>
+//                 </div>
+
+//                 {
+
+//                   <div  >
+//                     <h4 class="h3 mb-0 me-4">{prix}  </h4>
+//                     {/* <h4 class="h3 mb-0 me-4">{panier.prixPanier }  </h4> */}
+
+//                   </div>
+
+//                 }
+//               </div>
+
+//               <div class="d-flex justify-content-between p-md-1 ">   </div>
+
+//               <div className="row ">
+//                 <div class="col-xl-4 col-md-12 mb-2"></div>
+//                 <div className="col-1 ">
+
+//                   <div className="form-row " >
+
+//                   <Link>
+//                     <button className="btn btn-success btn-block " onClick ={chekout}>
+//                       <FontAwesomeIcon className="mr-2" icon={faShoppingBag} /> Checkout 
+//                     </button>
+//                     </Link>
+//                   </div>
+//                 </div>
+
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+
+
+//       </div>
+
+//     </div>
+//   )
+
+// }
+
+// export default test;
+
+
+
+
+
+// --> 
+
+//pay
+{/*
+
+import NavBar from "../NavBar";
+import React, { useState, useEffect } from 'react';
+import { MDBCollapse, MDBBtn, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import PanierService from "./PanierService";
+import Stripe from "react-stripe-checkout";
+import axios from "axios";
+import { PayPalScriptProvider, PayPalButtons, BraintreePayPalButtons } from "@paypal/react-paypal-js";
+import Paypal from "./PayPal";
+import Payment from "./pay";
+export default function Chekout() {
+
+
+    const initialOptions = {
+        currency: "USD",
+        intent: "capture",
+        "data-client-token": "abc123xyz==",
+    };
+
+    const [checkout, setCheckOut] = useState(false);
+
+    async function handleToken(token) {
+        console.log(token);
+        await axios
+            .post("http://localhost:8080/payment/charge", "", {
+                headers: {
+                    token: token.id,
+
+                    amount: sessionStorage.getItem('prixFinal'),
+                },
+            })
+            .then(() => {
+                alert("Payment Success");
+            })
+            .catch((error) => {
+                alert(error);
+            });
+    }
+
+    const [showFirstElement, setShowFirstElement] = useState(false);
+    const [showSecondElement, setShowSecondElement] = useState(false);
+    const toggleFirstElement = () => setShowFirstElement(!showFirstElement);
+    const toggleSecondElement = () => setShowSecondElement(!showSecondElement);
+
+
+
+    const [paniers, setPaniers] = useState([]);
+
+    const idPanier = sessionStorage.getItem('authenticatedIdPanier');
+
+    const formData = new FormData();
+
+    async function Payment() {
+
+        await axios
+            .post("http://localhost:8080/payment", formData)
+            .then(() => {
+                alert("Payment Success");
+            })
+            .catch((error) => {
+                alert(error);
+            });
+    }
+
+
+    useEffect(() => {
+        PanierService.getPanier(idPanier).then((res) => setPaniers(res.data))
+    }, []);
+
+
+
+    return (
+
+
+
+        <div>
+
+            <NavBar />
+
+
+            <main className="mt-2 pt-2">
+
+
+                <div className="container wow fadeIn">
+
+
+                    <h2 className="my-5 h2 text-center">Checkout form</h2>
+
+                    <div className="row">
+
+                        <div className="col-md-8 mb-4">
+
+                            <div className="card">
+
+                                <form className="card-body" >
+
+
+                                    <div className="row">
+
+
+                                        <div className="col-md-6 mb-2">
+
+
+                                            <div className="md-form ">
+                                                <input type="text" id="firstName" className="form-control" required />
+                                                <label for="firstName" className="">First name</label>
+                                            </div>
+
+                                        </div>
+
+                                        <div className="col-md-6 mb-2">
+
+                                            <div className="md-form">
+                                                <input type="text" id="lastName" className="form-control" required />
+                                                <label for="lastName" className="">Last name</label>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    {/* <div className="md-form input-group pl-0 mb-5">
+                                        <div className="input-group-prepend">
+                                            <span className="input-group-text" id="basic-addon1">@</span>
+                                        </div>
+                                        <input type="text" className="form-control py-0" placeholder="Username" aria-describedby="basic-addon1" />
+                                    </div> *
+//
+
+                                    <div className="md-form mb-5">
+                                        <input type="email" id="email" className="form-control" placeholder="youremail@example.com" required />
+                                        <label for="email" className="">Email (optional)</label>
+                                    </div>
+
+
+                                    <div className="md-form mb-5">
+                                        <input type="text" id="address" className="form-control" placeholder="1234 Main St" required />
+                                        <label for="address" className="">Address</label>
+                                    </div>
+
+
+                                    <div className="md-form mb-5">
+                                        <input type="text" id="address-2" className="form-control" placeholder="Apartment or suite" required />
+                                        <label for="address-2" className="">Address 2 (optional)</label>
+                                    </div>
+
+
+                                    <div className="row">
+
+                                        <div className=" d-12 mb-4">
+
+                                            <label for="country">Country</label>
+                                            <select className="custom-select d-block w-100" id="country" required>
+                                                <option value="">Choose...</option>
+                                                <option>United States</option>
+                                            </select>
+                                            <div className="invalid-feedback">
+                                                Please select a valid country.
+                                            </div>
+
+                                        </div>
+
+                                        <div className="col-lg-4 col-md-6 mb-4">
+
+                                            <label for="state">State</label>
+                                            <select className="custom-select d-block w-100" id="state" required>
+                                                <option value="">Choose...</option>
+                                                <option>California</option>
+                                            </select>
+                                            <div className="invalid-feedback">
+                                                Please provide a valid state.
+                                            </div>
+
+                                        </div>
+
+                                        <div className="col-lg-4 col-md-6 mb-4">
+
+                                            <label for="zip">Zip</label>
+                                            <input type="text" className="form-control" id="zip" placeholder="" required />
+                                            <div className="invalid-feedback">
+                                                Zip code required.
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+                                    <hr />
+
+                                    <div class="card">
+                                        <div class="card-header p-0" id="headingTwo">
+                                            <h2 class="mb-0">
+                                                
+                                                <button class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom" onClick={toggleSecondElement} data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                <PayPalScriptProvider type="button" options={{ "client-id": "AcWMluVdTTx8z0UwnVqp1lCfd4bOdxARHSPKYO6cYuudiFeZXSqs3Ln5wvj7u00qseyZqv0IkMaHrT4m" }}>
+                                                    <PayPalButtons
+                                                        style={{ layout: "horizontal" }}
+                                                        createOrder={(data, actions) => {
+                                                            return actions.order.create({
+                                                                purchase_units: [
+                                                                    {
+                                                                        currency_code: "USD",
+                                                                        intent: "sale",
+                                                                        amount: {
+                                                                            value: Number(paniers.prixPanier).toFixed(2)
+                                                                        },
+                                                                    },
+                                                                ],
+                                                            });
+                                                        }}
+                                                    />
+                                                </PayPalScriptProvider>                                               
+                                                 </button> </h2>
+                                        </div>
+
+
+                                    </div>
+                                    <h4 />
+                                    <div class="card">
+                                        <div class="card-header p-0">
+                                            <h2 class="mb-0"> <button onClick={toggleFirstElement} class="btn btn-light btn-block text-left p-3 rounded-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                              
+                                                <div class="d-flex align-items-center justify-content-between"> <span>Strip</span>
+                                                <Stripe
+                                   stripeKey="sk_test_51JVedOHHuT2arISf4Uy8lGRgxjT1QyWQKww6K7PXkPlfQbtJIK94Uo4QyzgjEIHErnvZERolQUElPLGP7J9Y58JQ00Z0PDEWSb"
+                            token={handleToken}
+                        />                                                </div>
+                                            </button> </h2>
+                                        </div>
+                                        <MDBRow>
+                                            <MDBCol>
+                                                <MDBCollapse className='mt-3'>
+                                                    <div className="row">
+
+                                                        <div className="col-md-6 mb-3">
+                                                            <label for="cc-name">Name on card</label>
+                                                            <input type="text" className="form-control" id="cc-name" placeholder="" required />
+                                                            <small className="text-muted">Full name as displayed on card</small>
+                                                            <div className="invalid-feedback">
+                                                                Name on card is required
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-6 mb-3">
+                                                            <label for="cc-number">Credit card number</label>
+                                                            <input type="text" className="form-control" id="cc-number" placeholder="" required />
+                                                            <div className="invalid-feedback">
+                                                                Credit card number is required
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row">
+                                                        <div className="col-md-3 mb-3">
+                                                            <label for="cc-expiration">Expiration</label>
+                                                            <input type="text" className="form-control" id="cc-expiration" placeholder="" required />
+                                                            <div className="invalid-feedback">
+                                                                Expiration date required
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-md-3 mb-3">
+                                                            <label for="cc-expiration">CVV</label>
+                                                            <input type="text" className="form-control" id="cc-cvv" placeholder="" required />
+                                                            <div className="invalid-feedback">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </MDBCollapse>
+                                            </MDBCol>
+                                        </MDBRow>
+                                    </div>
+
+                                    <div className="d-block my-3">
+                                    </div>
+                                    <hr className="mb-4" />
+                                    <form >
+                                        <button className="btn btn-primary btn-lg btn-block" type="submit" onClick={Payment}>Continue to checkout</button>
+                                    </form>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div className="col-md-4 mb-4">
+
+
+                            <h4 className="d-flex justify-content-between align-items-center mb-3">
+                                <span className="text-muted">Your cart</span>
+                                <span className="badge badge-secondary badge-pill">{ }</span>
+                            </h4>
+
+
+                            <ul className="list-group mb-3 z-depth-1">
+
+
+                                <li className="list-group-item d-flex justify-content-between"  >
+
+                                    <span>Total (USD) </span>
+
+                                    <strong>${paniers.prixPanier}</strong>
+
+                                </li>
+
+
+                            </ul>
+                        </div>
+                        <Stripe
+                            stripeKey="sk_test_51JVedOHHuT2arISf4Uy8lGRgxjT1QyWQKww6K7PXkPlfQbtJIK94Uo4QyzgjEIHErnvZERolQUElPLGP7J9Y58JQ00Z0PDEWSb"
+                            token={handleToken}
+                        />
+
+                        <PayPalScriptProvider options={{ "client-id": "AcWMluVdTTx8z0UwnVqp1lCfd4bOdxARHSPKYO6cYuudiFeZXSqs3Ln5wvj7u00qseyZqv0IkMaHrT4m" }}>
+                            <PayPalButtons
+                                style={{ layout: "horizontal" }}
+                                createOrder={(data, actions) => {
+                                    return actions.order.create({
+                                        purchase_units: [
+                                            {
+                                                currency_code: "USD",
+                                                intent: "sale",
+                                                amount: {
+                                                    value: Number(paniers.prixPanier).toFixed(2)
+                                                },
+                                            },
+                                        ],
+                                    });
+                                }}
+                            />
+                        </PayPalScriptProvider>
+                        {/* <div className="App">
+                            {checkout ? (
+                                <Payment />
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        setCheckOut(true);
+                                    }}
+                                >
+                                    Checkout
+                                </button>
+                            )}
+                        </div> 
+                    </div>
+
+
+                </div>
+            </main>
+        </div>
+
+
+
+    )
+
+}
+
+  
+*/ }
+
+
+
+
+
+// // */}
+// const  AddtoCart =(product)=>{
+  
+
+ 
+
+//     setIdProduit(product.id)
+    
+//  if(idNewpanier==null){
+//     PanierService.newPanier().then(res=>(setPanier(res.data)),
+//     sessionStorage.setItem('newPanier',panier.idPanier),
+//  )
+//  PanierService.addComposantPanier(formData)
+//  .then(()=>{setUnsaved(false); setSaved(true);
+ 
+//    registerSuccessfulLoging(product.price + priTotal);
+//    sessionStorage.setItem('aut',d)
+ 
+//  }
+//  )
+//  .catch(()=>{setUnsaved(true); setSaved(false)})
+ 
+//  }
+//  else
+ 
+//      {
+//        PanierService.addComposantPanier(formData)
+//      .then(()=>{setUnsaved(false); setSaved(true);
+      
+    
+//        registerSuccessfulLoging(product.price + priTotal);
+//        sessionStorage.setItem('aut',d)
+ 
+//      }
+//      )
+//      .catch(()=>{setUnsaved(true); setSaved(false)})}
+     
+//    }
