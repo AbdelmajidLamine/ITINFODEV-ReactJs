@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { BrowserRouter as Router, Link, NavLink, Route, Switch, useHistory } from 'react-router-dom';
 import CommandeClient from './CommandeClient';
-import DashboardComponent from '../../../admin-template/DashboardComponent';
+import AccountService from './AccountService'
 
 import ProfileForm from './ProfileForm';
 
@@ -12,6 +12,16 @@ export default function Account() {
     const idclient = sessionStorage.getItem('authenticatedId');
 
     const mail = sessionStorage.getItem('authenticatedMail');
+    const [client,setClient]=useState([]);
+    useEffect(()=>{
+    if(idclient){
+        AccountService.getClient(idclient).then(res=>setClient(res.data)) 
+        console.log(idclient)
+        console.log(mail)
+    }else{
+        history.push('/SignIn')
+    }
+    },[])
     
     const logoutfunction = () => {
         sessionStorage.removeItem('authenticatedUser');
@@ -20,78 +30,109 @@ export default function Account() {
         history.push('/home');
     }
 
-    return (
-        <Router>
-            <div id="page-top">
-                <div id="wrapper">
-                    <nav className="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
-                        <div className="container-fluid d-flex flex-column p-0">
-                            <a className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" >
-                            <div className="sidebar-brand-icon rotate-n-15"><i className="fas fa-laugh-wink"></i></div>
-                            <div className="sidebar-brand-text mx-3"><span>BoucherieRaouy
-</span></div>
-                            </a>
-                            <hr className="sidebar-divider my-0" />
-                            <ul className="nav navbar-nav text-light" id="accordionSidebar">
-                                <li className="nav-item"><NavLink className="nav-link" to="/user/dashboard"><i className="fas fa-tachometer-alt"></i><span>Dashboard</span></NavLink></li>
-                                <li className="nav-item"><NavLink className="nav-link" to="/user/profile"><i className="fas fa-user"></i><span>Profile</span></NavLink ></li>
-                                <li className="nav-item"><NavLink className="nav-link" to="/user/commands"><i className="fas fa-gifts"></i><span>Commands</span></NavLink ></li>
-                            </ul>
-                            <div className="text-center d-none d-md-inline"><button className="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
-                        </div>
-                    </nav>
-                    <div className="d-flex flex-column" id="content-wrapper">
-                        <div id="content">
-                            <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                                <div className="container-fluid"><button className="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i className="fas fa-bars"></i></button>
-                                    <form className="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                        <div className="input-group"><input className="bg-light form-control border-0 small" type="text" placeholder="Search for ..." />
-                                            <div className="input-group-append"><button className="btn btn-primary py-0" type="button"><i className="fas fa-search"></i></button></div>
-                                        </div>
-                                    </form>
-                                    <ul className="nav navbar-nav flex-nowrap ml-auto">
-                                        <li className="nav-item dropdown d-sm-none no-arrow"><a className="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="/#"><i className="fas fa-search"></i></a>
-                                            <div className="dropdown-menu dropdown-menu-right p-3 animated--grow-in" aria-labelledby="searchDropdown">
-                                                <form className="form-inline mr-auto navbar-search w-100">
-                                                    <div className="input-group"><input className="bg-light form-control border-0 small" type="text" placeholder="Search for ..." />
-                                                        <div className="input-group-append"><button className="btn btn-primary py-0" type="button"><i className="fas fa-search"></i></button></div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </li>
 
-                                        <div className="d-none d-sm-block topbar-divider"></div>
-                                        <li className="nav-item dropdown no-arrow">
-                                            <div className="nav-item dropdown no-arrow"><a className="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="/#"><span className="d-lg-inline mr-2 text-gray-600 small"> {username}</span></a>
-                                                <div className="dropdown-menu shadow dropdown-menu-right animated--grow-in">
-                                                    <Link className="dropdown-item" to="/adminMain/profile" >
-                                                        <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings
-                                                   </Link>
-                                                    <div className="dropdown-divider"></div><a className="dropdown-item"  onClick={logoutfunction}><i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                            <div className="container-fluid">
+    return (
+
+        <Router>
+        <div class="container-fluid">
+           
+        <div class="row header shadow-sm">
+    <div class="col-sm-3 pl-0 text-center header-logo">
+       <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
+            <h3 class="logo"><a href="#" class="text-secondary logo"><i class="fa fa-rocket"></i> Boucherie<span class="small">2002</span></a></h3>
+       </div>
+    </div>
+    
+    <div class="col-sm-9 header-menu pt-2 pb-0">
+        <div class="row">
+            
+            
+            
+            <div class="col-sm-4 col-8 pl-0">
+                
+               
+                
+                
+             
+            </div>
+         
+            <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
+                <div class="search-rounded mr-3">
+                    <input type="text" class="form-control search-box" placeholder="Enter keywords.." />
+                </div>
+                <div class="mr-4">
+                    <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src={client.image ? "data:image/png;base64,"+client.image : "/assets/img/admins/avatar4.jpeg"} alt="Adam" class="rounded-circle" width="40px" height="40px" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
+                        <NavLink to="/user/profile"> <a class="dropdown-item" href="#"><i class="fa fa-user pr-2"></i> Profile</a></NavLink>
+                        <div class="dropdown-divider"></div>
+                        <NavLink to="/user/commands"> <a class="dropdown-item" href="#"><i class="fa fa-th-list pr-2"></i> Orders</a></NavLink>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" onClick={logoutfunction}><i class="fa fa-power-off pr-2"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+         
+        </div>    
+    </div>
+    </div>
+           
+
+            <div class="row main-content">
+              <div class="col-sm-3 col-xs-6 sidebar pl-0">
+                <div class="inner-sidebar mr-3">
+                <div class="avatar text-center">
+                        <img src={client.image ? "data:image/png;base64,"+client.image : "/assets/img/admins/avatar4.jpeg"} alt="" class="rounded-circle" />
+                        <p><strong>{client.name}</strong></p>
+                        <span class="text-primary small"><strong>user</strong></span>
+                    </div>
+
+                    <div class="sidebar-menu-container">
+                        <ul class="sidebar-menu mt-4 mb-4">
+                            <br></br>
+                           
+                            <li class="parent">
+                            <NavLink  to="/user/dashboard"><i className="fas fa-tachometer-alt mr-2"></i><span className="none">Dashboard</span></NavLink>
+                            </li>
+                            <br></br>
+                            
+
+                            <li class="parent">
+                            <NavLink to="/user/profile"><i className="fas fa-user mr-2"></i><span className="none">Profile</span></NavLink >
+                            </li>
+                            <br></br>
+                           
+                            <li class="parent">
+                            <NavLink to="/user/commands"><i className="fas fa-gifts mr-2"></i><span className="none">Commands</span></NavLink >
+                            </li>
+                            <br></br>
+                            
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
                                 <Switch>
-{               //                     <Route path="/adminMain/dashboard" component={DashboardComponent} />
-}                                   <Route path="/user/profile" component={()=>ProfileForm(idclient)} />
-                                    <Route path="/user/commands" component={()=>CommandeClient(mail)  } />
+                                     <Route path="/user/profile" component={()=>ProfileForm(idclient)} />
+                                    <Route path="/user/commands" component={()=>CommandeClient(client.email)  } />
                                 </Switch>
-                            </div>
-                        </div>
+                         
+              </div>
                         <footer className="bg-white sticky-footer">
                             <div className="container my-auto">
                                 <div className="text-center my-auto copyright"><span>Copyright ©raouy 2021</span></div>
                             </div>
                         </footer>
-                    </div>
+                  
                     <a className="border rounded d-inline scroll-to-top" href="#page-top"><i className="fas fa-angle-up"></i></a>
-                </div>
+               
+            </div>
             </div>
         </Router>
+       
     )
 
 }

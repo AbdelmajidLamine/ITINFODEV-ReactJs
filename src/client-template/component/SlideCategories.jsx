@@ -22,57 +22,52 @@ const SlideCategories = () => {
 
                                 </MDBCol>
                                 <MDBCol md="2">
-                                    <MDBCard className="mb-2">
-                                        <MDBCardImage className="img-fluid" src="\assets\img\categories\abats.png" /> 
-                                        <MDBCardBody>
-                                            <MDBCardTitle>Abats</MDBCardTitle>
-                                            <MDBCardText>
-                                            </MDBCardText>
-                                            <Link to={"/categorie/Abats"} class="btn btn-primary stretched-link" >  show products</Link>
-                                        </MDBCardBody>
-                                    </MDBCard>
+                                    
+                                        <div class="item__categories">
+
+                                            <div class="card__categories">
+                                                <div class="pos1__categories" style={{
+                                                    backgroundImage:' url("/assets/img/categories/abats.png")',
+                                                    backgroundSize: '350px',
+                                                    backgroundPosition: 'center'
+                                                }}><div class="abv__categories abv1__categories">Abats</div></div>
+                                               <Link to={"/categorie/Abats"}> <h2>"show products"</h2></Link>
+                                            </div>
+                                            </div>
+                                    
+                                </MDBCol>
+                                <MDBCol md="1">
+
                                 </MDBCol>
                                  <MDBCol md="2">
-                                    <MDBCard className="mb-2">
-                                        <MDBCardImage className="img-fluid" src="\assets\img\categories\agneau.jpg" />
-                                        <MDBCardBody>
-                                            <MDBCardTitle>L'Agneau</MDBCardTitle>
-                                            <MDBCardText>
+                                   
+                                    <div class="item__categories">
 
-                                            </MDBCardText>
-                                            <Link to={"/categorie/agneau"} class="btn btn-primary stretched-link" >  show products</Link>
-                                        </MDBCardBody>
-                                    </MDBCard>
+                                    <div class="card__categories">
+                                        <div class="pos2__categories" style={{
+                                            backgroundImage:' url("/assets/img/categories/agneau.jpg")',
+                                            backgroundSize: '350px',
+                                            backgroundPosition: 'center'
+                                        }}><div class="abv__categories abv1__categories">L'Agneau</div></div>
+                                    <Link to={"/categorie/agneau"}> <h2>"show products"</h2></Link>
+                                    </div>
+                                    </div>
+                                </MDBCol>
+                                <MDBCol md="1">
+
                                 </MDBCol>
                                 <MDBCol md="2">
-                                    <MDBCard className="mb-2">
-                                        <MDBCardImage className="img-fluid" src="\assets\img\categories\boeuff.jpg" />
-                                        <MDBCardBody>
-                                            <MDBCardTitle>Le Boeuf</MDBCardTitle>
-                                            <MDBCardText>
+                                    <div class="item__categories">
 
-                                            </MDBCardText>
-                                            <Link to={"/categorie/bouef"} class="btn btn-primary stretched-link" >  show products</Link>
-                                        </MDBCardBody>
-                                    </MDBCard>
-                                </MDBCol>
-                                <MDBCol md="2">
-                                    <MDBCard className="mb-2">
-                                        <div className="col-md-20 text-center">
-                                            <MDBCardImage cascade top src="\assets\img\categories\charcuterie-halal.jpg"
-                                            />
-
-                                        </div>
-
-                                        <MDBCardBody>
-                                            <MDBCardTitle>Charcuterie</MDBCardTitle>
-                                            <MDBCardText>
-
-                                            </MDBCardText>
-
-                                            <Link to={"/categorie/charcuterie"} class="btn btn-primary stretched-link" >  show products</Link>
-                                        </MDBCardBody>
-                                    </MDBCard>
+                                    <div class="card__categories">
+                                        <div class="pos3__categories" style={{
+                                            backgroundImage:' url("/assets/img/categories/boeuff.jpg")',
+                                            backgroundSize: '350px',
+                                            backgroundPosition: 'center'
+                                        }}><div class="abv__categories abv1__categories">Le Boeuf</div></div>
+                                    <Link to={"/categorie/bouef"}> <h2>"show products"</h2></Link>
+                                    </div>
+                                    </div>
                                 </MDBCol> 
                             </MDBRow>
                         </MDBCarouselItem>
@@ -82,46 +77,51 @@ const SlideCategories = () => {
 
                                 </MDBCol>
                                 <MDBCol md="2">
-                                    <MDBCard className="mb-1">
-                                        <MDBCardImage className="img-fluid" src="\assets\img\categories\volaille.jpg" />
-                                        <MDBCardBody>
-                                            <MDBCardTitle>Le Volaille</MDBCardTitle>
-                                            <MDBCardText>
+                                   
+                                    <div class="item__categories">
 
-                                            </MDBCardText>
-                                            <Link to={"/categorie/volaille"} class="btn btn-primary stretched-link" >  show products</Link>
-                                        </MDBCardBody>
-                                    </MDBCard>
+                                    <div class="card__categories">
+                                        <div class="pos1__categories" style={{
+                                            backgroundImage:' url("/assets/img/categories/volaille.jpg")',
+                                            backgroundSize: '350px',
+                                            backgroundPosition: 'center'
+                                        }}><div class="abv__categories abv1__categories">Le Volaille</div></div>
+                                    <Link to={"/categorie/volaille"}> <h2>"show products"</h2></Link>
+                                    </div>
+                                    </div>
                                 </MDBCol>
                                 <MDBCol md="1">
 
                                 </MDBCol>
                                 <MDBCol md="2">
+                                    <div class="item__categories">
 
-                                    <MDBCard className="mb-1">
-                                        <MDBCardImage className="img-fluid" src="\assets\img\categories\veau.jpg" />
-                                        <MDBCardBody>
-                                            <MDBCardTitle>Le Veau</MDBCardTitle>
-                                            <MDBCardText>
-
-                                            </MDBCardText>
-                                            <Link to={"/categorie/veau"} class="btn btn-primary stretched-link" >  show products</Link>
-                                        </MDBCardBody>
-                                    </MDBCard>
+                                        <div class="card__categories">
+                                            <div class="pos2__categories" style={{
+                                                backgroundImage:' url("/assets/img/categories/veau.jpg")',
+                                                backgroundSize: '350px',
+                                                backgroundPosition: 'center'
+                                            }}><div class="abv__categories abv1__categories">Le Veau</div></div>
+                                        <Link to={"/categorie/veau"}> <h2>"show products"</h2></Link>
+                                        </div>
+                                        </div>
                                 </MDBCol>
                                 <MDBCol md="1">
 
                                 </MDBCol>
                                 <MDBCol md="2">
-                                    <MDBCard className="mb-1">
-                                        <MDBCardImage className="img-fluid" src="\assets\img\categories\Preparations.jpg" />
-                                        <MDBCardBody>
-                                            <MDBCardTitle>Préparations</MDBCardTitle>
-                                            <MDBCardText>
-                                            </MDBCardText>
-                                            <Link to={"/categorie/preparations"} class="btn btn-primary stretched-link" >  show products</Link>
-                                        </MDBCardBody>
-                                    </MDBCard>
+                                    
+                                    <div class="item__categories">
+
+                                        <div class="card__categories">
+                                            <div class="pos3__categories" style={{
+                                                backgroundImage:' url("/assets/img/categories/Preparations.jpg")',
+                                                backgroundSize: '350px',
+                                                backgroundPosition: 'center'
+                                            }}><div class="abv__categories abv1__categories">Préparations</div></div>
+                                        <Link to={"/categorie/preparations"}> <h2>"show products"</h2></Link>
+                                        </div>
+                                        </div>
                                 </MDBCol>
 
                             </MDBRow>

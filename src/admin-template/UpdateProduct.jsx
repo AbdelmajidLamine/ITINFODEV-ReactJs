@@ -3,7 +3,7 @@ import React, { useEffect, useState }  from 'react';
 import CategorieService from './CategorieService';
 import ProductsService from './ProductsService';
 
- function  UpdateProductComponent (){
+ function  UpdateProductComponent (props){
  
       const [saved,setSaved]= useState(false)
       const [unsaved,setUnsaved]= useState(false)
@@ -23,8 +23,7 @@ import ProductsService from './ProductsService';
       formData.append("shortDescription",shortDescription);
       formData.append("status",status);
       formData.append("stock",stock);
-      formData.append("image",image);
-      
+      formData.append("image",image);  
       formData.append("price",price);
       formData.append("category",category);
        
@@ -39,7 +38,7 @@ import ProductsService from './ProductsService';
      
 
       useEffect(() => {
-        ProductsService.productById(id).then(res=>(setProduct(res.data))
+        ProductsService.productById(props.location.state).then(res=>(setProduct(res.data))
         );
        
     },[]);
@@ -49,7 +48,7 @@ import ProductsService from './ProductsService';
 
       const UpdateProduct=()=>{
         
-          ProductsService.modifyProductPrice(id,formData)
+          ProductsService.modifyProductPrice(props.location.state,formData)
           .then(res=>{setUnsaved(false); setSaved(true)})
           .catch(err=>{setUnsaved(true); setSaved(false)})
       }
@@ -64,6 +63,13 @@ import ProductsService from './ProductsService';
               <form>
                   <div className="form-row">
                       <div className="col">
+                           <div className="card mb-3">
+                                <div className="card-body text-center shadow"><img className="rounded-circle mb-3 mt-4" src={product.image ? "data:image/png;base64,"+product.image : "/assets/img/admins/avatar4.jpeg"} width="160" height="160" alt="gg"/>
+                                    <div className="mb-3"> <label>Photos: </label>
+                                <input type="file" name="image" accept="image/png, image/jpeg" onChange={event=>setImage(event.target.files[0])}/></div>
+                                </div>
+                            </div>
+                          
                           <div className="form-group">
                             <label htmlFor="username"><strong>ProductName</strong></label>
                             <input className="form-control" type="text" defaultValue={product.name} onChange={(event)=>setName(event.target.value)}/>
@@ -78,29 +84,8 @@ import ProductsService from './ProductsService';
                           <div className="form-group"><label htmlFor="Image"><strong>Image</strong></label>
                          
                           <div className="input-group">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text" id="inputGroupFileAddon01">
-                          Upload
-                        </span>
-                      </div>
-                      <div className="custom-file">
-                        <input
-                          placeholder="img" name="img"
-                          type="file"
                     
-                     
-                     
-                          className="form-control"
-                          id="inputGroupFile01"
-                          aria-describedby="inputGroupFileAddon01"
-                          //  onChange={(event) => setImage(event.target.files[0])}
-                           onChange={(event)=>setImage(event.target.value)}
-                          // onChange={(event) => console.log("update res :",event.target.files[0])}
-                        />
-                        <label className="custom-file-label" htmlFor="inputGroupFile01">
-                          Choose file {image}
-                        </label>
-                      </div>
+                    
                     </div>
                         
                        
@@ -117,7 +102,7 @@ import ProductsService from './ProductsService';
                           <label htmlFor="floatingSelect" ></label><br/>
                             <label htmlFor="floatingSelect" >chose the category </label><br/>
                            
-                            <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example" onChange={(event)=>SetCategory(event.target.value)} onClick={console.log(category)} >
+                            <select className="form-select form-select-lg mb-3" aria-label=".form-select-lg example"  onChange={(event)=>SetCategory(event.target.value)} onClick={(event)=>SetCategory(event.target.value)} >
                                {
                                    categories.map( (categorie)=>
                                    <option  key={categorie.idCategorie} value={categorie.idCategorie}>{categorie.nomCategorie}</option>

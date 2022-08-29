@@ -23,51 +23,29 @@ const SignInForm = () => {
 
   const [id, setId] = useState();
 
-  const registerSuccessfulLoging = (name, idClient, email, idPanier) => {
-
-    //  const [idPanie,setidPanier]=useState(16381)
-    const idPanieDelet = sessionStorage.getItem('newPanier');
-
-    const fr = new FormData();
-    fr.append('idPanier', idPanier)
-    fr.append('prixPanier', Number(prixPanier).toFixed(3))
-
-    if (chekoutUser == 1) {
-
-      sessionStorage.setItem('authenticatLoginchekout', 0);
-      sessionStorage.setItem('countActivé', 1);
-      sessionStorage.setItem('authenticatedId', idClient);
-      sessionStorage.setItem('authenticatedIdPanier', idPanier);
-      sessionStorage.setItem('prixFinal', prixPanier)
-
-      axios.put("http://localhost:8080/modifyP", fr);
-
-      // axios.delete('http://localhost:8080/deletePanier/' + idPanieDelet)
-
-      history.push('/chekout')
-
-
-
-    }
-    else if (name) {
-      sessionStorage.setItem('authenticatedUser', name);
-      sessionStorage.setItem('authenticatedId', idClient);
-      sessionStorage.setItem('authenticatedMail', email);
-      sessionStorage.setItem('authenticatedIdPanier', idPanier);
-      history.push('/User')
-    }
-    else setLogWrong(true);
-  }
-
 
   const loginHandling = () => {
 
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
+    
 
     axios.post("http://localhost:8080/SignIn", formData)
-      .then(res => registerSuccessfulLoging(res.data.name, res.data.idClient, res.data.email, res.data.panier.idPanier))
+      .then(res => {
+      sessionStorage.setItem('authenticatedId', res.data.idClient);
+      sessionStorage.setItem('authenticatedMail', res.data.mail);
+      if(localStorage.getItem('checkout')=="checkout"){
+        localStorage.setItem('checkout',"nonCheckout")
+        history.push('/chekout')
+      }else{
+        localStorage.setItem('checkout',"nonCheckout")
+        history.push('/user/commands')
+      }
+      
+    }
+         
+      )
       .catch(function (error) {
         if (error.response) {
           // Request made and server responded
@@ -80,6 +58,7 @@ const SignInForm = () => {
           setLogWrong(true)
         }
       });
+      sessionStorage.setItem('authenticatLoginchekout', 0);
   }
 
 
@@ -87,61 +66,29 @@ const SignInForm = () => {
 
   return (
 
-    <div style={{        backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-    height: "700px"            }}>
+    <div >   
+       <div className="bg-gradient-danger" style={{ width: '100%', height: '100' }}>
+       
+        </div>   
 
-     
-      
-      {/* <div style={{ height: "20px" }} ></div>
-      <div class="bg-image d-flex justify-content-center align-items-center" style=
-        {{
-          backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-          height: "300px"
-        }}>
-        <div class="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-          <h1 style={{ width: "rem", height: "50px" }}>
 
-            <strong class="text-white mb-0" >
-              Log in  </strong>
-          </h1>
-        </div>
-
-      </div> */}
-      <h2 className="my-3 h2 text-center"></h2>
-      {/* <Breadcrumbs class=" my-3 nav justify-content-center">
-        <nav aria-label="breadcrumb">
-          <ul class="nav justify-content-center">
-            <li class="nav-item">
-              <a class="nav-link active" href="/Home" > Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">/</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled"  >Cart</a>
-            </li>
-
-          </ul>
-        </nav>
-
-      </Breadcrumbs> */}
-<div style={{ height: "80px" }} ></div>
-      <MDBContainer  >
-
-        <MDBRow className="d-flex justify-content-center p-2 w-100" >
-          <MDBCol md="6" >
-            <MDBCard style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }} >
-              <div className="header pt-3 grey lighten-2">
-                <MDBRow className="d-flex justify-content-center">
-                  <h3 className=" mt-3 mb-4 pb-1 mx-5">
-                  <strong class="text-white mb-0" >
-              Log in  </strong>
-                  </h3>
-
-                </MDBRow>
-              </div>
-              <MDBCardBody className="mx-4 mt-4" >
-                <MDBInput  group type="email" containerClass="mb-0" validate onChange={(event) => setEmail(event.target.value)} />
+      <div style={{ width: '100%', height: '400px' }}>
+                <div className="container" style={{ width: '100%', height: '400px' }}>
+                    <div className="row justify-content-center" >
+                        <div className="col-md-9 col-lg-12 col-xl-10">
+                            <div className="card shadow-lg o-hidden border-0 my-5">
+                                <div className="card-body p-0">
+                                    <div className="row">
+                                        <div className="col-lg-5 d-none d-lg-flex">
+                                            <div className="flex-grow-1 bg-login-image" style={{ backgroundImage: " url(./logo.png)" }}></div>
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <div className="p-5">
+                                                <div className="text-center">
+                                                    <h4 className="text-dark mb-4">Log in</h4>
+                                                </div>
+                                                {/* <form className="user" action="/adminMain" > */}
+                                                <MDBInput  group type="email" containerClass="mb-0" validate onChange={(event) => setEmail(event.target.value)} />
                 <label > <strong className="text-white mb-0" >
                 Your email</strong> </label>
                 <MDBInput
@@ -173,7 +120,7 @@ const SignInForm = () => {
 
                 <p className="font-small text-white d-flex justify-content-center">
 
-                <strong>    Don't have an account?</strong>
+                <strong style={{color:"black"}}>    Don't have an account?</strong>
                 
                   <a
                     href="/SignUp"
@@ -182,11 +129,17 @@ const SignInForm = () => {
                     Sign up
                   </a>
                 </p>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+     
      
       <div style={{ height: "100px" }} ></div>
       <div> 

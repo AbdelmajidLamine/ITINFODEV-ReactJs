@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import CategorieService from './CategorieService';
 import ProductsService from './ProductsService';
-import { MDBFileInput } from "mdbreact";
 import axios from 'axios';
 
 export default function AddProductComponent() {
@@ -46,11 +45,13 @@ export default function AddProductComponent() {
   formData.append("price", price);
 
 
+
   const saveProduct = () => {
 
     ProductsService.addProduct(formData)
       .then(res => { setUnsaved(false); setSaved(true) })
       .catch(err => { setUnsaved(true); setSaved(false) })
+    
   }
   return (
     <div className="card ">

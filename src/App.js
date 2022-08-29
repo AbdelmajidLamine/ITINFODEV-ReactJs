@@ -24,6 +24,7 @@ import CategorieComponenet from "./client-template/component/product/CategoriePr
 import Slide from "./client-template/component/Slide";
 import test from "./client-template/component/Cart/PanierComposant";
 import Search from "./client-template/component/product/Search";
+import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   //const username = sessionStorage.getItem('authenticatedUser');
   const [nomCategorie, setNomCategorie ] = useState("Abats")
@@ -52,6 +53,7 @@ function App() {
               <Route path = "/contact" component = {Contact} />
               <Route path = "/verifieCodePin" component = {VerifieCodePin} />
               <Route path = "/Search" component={() => Search('ab')} />
+              <Route path = "/success" component = {success} />
               {/* <Route path = "/Categorie" component = {()=>CategorieComponenet(tr)} /> */}
 
 {/*                

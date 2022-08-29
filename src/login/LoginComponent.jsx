@@ -16,7 +16,7 @@ export default function LoginComponent() {
       if (pseudo ) {
             sessionStorage.setItem('authenticatedUser', pseudo)
              sessionStorage.setItem('authentIdAdmin', idadmin)
-            history.push('/adminMain')
+            history.push('/adminMain/dashboard')
         }
         else setLogWrong(true);
     }

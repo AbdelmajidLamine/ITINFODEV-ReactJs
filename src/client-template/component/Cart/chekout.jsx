@@ -18,7 +18,12 @@ import { noAuto } from "@fortawesome/fontawesome-svg-core";
 //import TimePicker from 'react-time-picker';
 import Datetime from 'react-datetime';
 import TimePicker from 'react-bootstrap-time-picker';
+ import NotificationService from "../../../admin-template/NotificationService";
+import AccountService from "../account/AccountService";
+import { useHistory } from "react-router-dom";
 export default function Chekout() {
+
+    
 
     
     
@@ -65,6 +70,7 @@ const idNewPanier= sessionStorage.getItem('newPanier');
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
+    var h=today.getHours();
     var tim =(today.getUTCHours()+1) +":"+today.getUTCMinutes();
 
     today =yyyy+"-"+mm+"-"+dd;
@@ -73,34 +79,31 @@ const idNewPanier= sessionStorage.getItem('newPanier');
     const [max,setMax] =useState("09:00");
     var jj='';
     
-    function definfMax(v) {
+    const definfMax=(v)=> {
         setDrive(v)
         
         jj=v.slice(8,10);
        
-        if(jj.localeCompare(dd)==0)
-        setMax("12:00")
+        if(jj.localeCompare(dd)==0){
+            if(h>=12 && h<17){
+                setMax("17:00")
+            }else if(h>=17){
+                setMax("9:00")
+            } else{
+                setMax("12:00")
+            }
+            
+        }
+        
        else
      {  setMax("10:00")}
     }
+
+    const panierData=new FormData();
+    panierData.append("clientId",sessionStorage.getItem("authenticatedId"))
+    panierData.append("totalPrice", localStorage.getItem("prixFinal"))
     
 
-    const formdata = new FormData();
-    formdata.append("firstName",firstName);
-    formdata.append("lastName",lastName);
-    formdata.append("companyName",companyName);
-    formdata.append("adresse",adresse);
-    formdata.append("adresse_2",adresse_2);
-    formdata.append("mail" ,mail);
-    formdata.append("notes",notes);
-    formdata.append("city",city);
-    formdata.append("phone",phone);
-    formdata.append("totalPrice",totalPrice)
-    formdata.append("idNewPanier",idNewPanier)
-    formdata.append("country", country);
-    formdata.append("drive",drive);
-    formdata.append("time",time);
-    formdata.append("codePostal",codePostal)
 
 
     const onApprove = (formdata, actions) => {
@@ -113,23 +116,108 @@ const idNewPanier= sessionStorage.getItem('newPanier');
 
         })
       };
-
+      const [idpanier,setIdpanier]=useState(0)
+      
+      const history = useHistory();
     async function handleToken(token) {
         console.log(token);
+        console.log(localStorage.getItem("prixFinal"))
+        console.log(sessionStorage.getItem("authenticatedId"))
+        console.log(quantite)
+        
         await axios.post("http://localhost:8080/charge","",{
                 headers:{
                     token:token.id,
-                    amount:paniers.prixPanier
-                }
+                    amount:500
+                },
             })
             .then(()=>{
-               PanierService.addCommand(formdata)
-               // alert("Payment Success")
-            }
-            )
+                PanierService.addPanier(panierData).then(res=>setIdpanier(res.data));
+                
+                
+            })
+            .then(()=>{
+                composantePaniers.map((comp,index)=>{
+                
+                    PanierService.maxIdPanier().then(res=>{
+                        let composantData=new FormData();
+                        composantData.append("idPanier",res.data);
+                        composantData.append("idProduit",comp.id);
+                        composantData.append("quantite",quantite[index]);
+                        PanierService.addComposantPanier(composantData);
+                        
+                    })
+    
+                    })
+                PanierService.maxIdPanier().then(res=>{
+                const formdata = new FormData();
+            
+                formdata.append("firstName",firstName);
+                formdata.append("lastName",lastName);
+                formdata.append("companyName",companyName);
+                formdata.append("adresse",adresse);
+                formdata.append("adresse_2",adresse_2);
+                formdata.append("mail" ,mail);
+                formdata.append("notes",notes);
+                formdata.append("city",city);
+                formdata.append("phone",phone);
+                formdata.append("totalPrice",localStorage.getItem("prixFinal"))
+                formdata.append("idNewPanier",res.data)
+                formdata.append("country", country);
+                formdata.append("drive",drive);
+                formdata.append("time",time);
+                formdata.append("codePostal",codePostal);
+                PanierService.addCommand(formdata);
+             
+                })
+            })
+            
             .catch((error) => {
                 alert(error);
             });
+
+            const notificationValue=new FormData();
+            notificationValue.append("title",'Order');
+            notificationValue.append("description",'new order saved');
+            notificationValue.append("details",'created a new order!');
+             NotificationService.addNotification(notificationValue)
+               .then(res=>{})
+              .catch(err=>{});
+
+
+            console.log(composantePaniers)
+          
+            
+
+                const params = JSON.stringify({
+
+                    "recipient": 'abdelmajid.lamine@etu.uae.ac.ma',
+                    
+                    "msgBody": 'votre commande a été bien enregister',
+              
+                    "subject": 'Boucherie 2002'
+                    });
+                  axios.post(`http://localhost:8080/sendMail`, params,{
+              
+                    "headers": {
+                    
+                    "content-type": "application/json",
+                    
+                    } }).then(response=> {
+              
+                      console.log(response);
+                      
+                      })
+                      
+                      .catch(error=> {
+                      
+                      console.log(error);
+                      
+                      })
+             
+            
+                // history.push('/adminMain')
+                history.push('/success')
     }
     const [showFirstElement, setShowFirstElement] = useState(false);
     const [showSecondElement, setShowSecondElement] = useState(false);
@@ -139,81 +227,55 @@ const idNewPanier= sessionStorage.getItem('newPanier');
         //  { setShowFirstElement(!showFirstElement)}
     }
     const toggleSecondElement = () => {
-        if (firstName && lastName)
-            setShowSecondElement(true)
-        else
-            alert("rempler tout les champ obligatoir")
+        if (firstName && lastName){
+            setShowSecondElement(true);
+
+
+        }else
+            alert("remplir tout les champ obligatoire")
     };
 
     
 
    
-    async function Payment() {
+    // async function Payment() {
 
-        await axios
-            .post("http://localhost:8080/payment",formdata)
-            .then(() => {
-                alert("Payment Success");
-            })
-            .catch((error) => {
-                alert(error);
-            });
-    }
+    //     await axios
+    //         .post("http://localhost:8080/payment",formdata)
+    //         .then(() => {
+    //             alert("Payment Success");
+    //         })
+    //         .catch((error) => {
+    //             alert(error);
+    //         });
+    // }
 
+    const [composantePaniers,setcomposantPaniers]=useState([])
+    const [quantite,setQuantite]=useState([])
+    const [clientId,setClientId]=useState()
+    const [Client,setClient]=useState([])
 
     useEffect(() => {
 
-        PanierService.getPanier(idPanier).then((res) => setPaniers(res.data));
-        PanierService.getAllComposantePanier(205).then((response) => setcomposantPanier(response.data));
-
+        let lStorage=localStorage.getItem("cart");
+        let sessionQuantite=localStorage.getItem("quantiteTotal")
+        let sessionClientId=sessionStorage.getItem("authenticatedId")
+        console.log(lStorage)
+         AccountService.getClient(sessionClientId).then(res=>setClient(res.data));
+         if(lStorage){
+                if(lStorage.length>1){
+                setcomposantPaniers(JSON.parse(lStorage));
+                setQuantite(JSON.parse(sessionQuantite))
+                
+                }else{
+                setcomposantPaniers(lStorage)
+                setQuantite(sessionQuantite)
+                }
+                setClientId(sessionClientId)
+    }
     }, []);
 
-    const postCheckout = (e) => {
-        const firstName = document.getElementById("firstname").value;
-        const lastName = document.getElementById("lastname").value;
-        const companyName = document.getElementById("companyName").value;
-        const country = "France";
-        const adresse = document.getElementById("addresse").value;
-
-        const adresse_2 = document.getElementById("adresse_2").value;
-
-        const city = document.getElementById("city").value;
-
-        const phone = document.getElementById("phone").value;
-        const mail = document.getElementById("mail").value;
-        const notes = document.getElementById("notes").value;
-        const totalPrice = paniers.prixPanier;
-
-
-
-        //  const products = cartItems.map((cartItem, key) => {
-        //   totalPrice = paniers.prixPanier;
-        //   return {id: cartItem.id, name: cartItem.name, price: cartItem.price};
-        // })
-        if (firstName && lastName && country && adresse && city && phone && mail && notes) {
-            axios
-                .post('http://localhost:8080/saveCommande', {
-                    firstName: firstName,
-                    lastName: lastName,
-                    companyName: companyName,
-                    country: country,
-                    adresse: adresse,
-                    adresse_2: adresse_2,
-                    city: city,
-                    phone: phone,
-                    mail: mail,
-                    notes: notes,
-                    //  products: products,
-                    totalPrice: totalPrice
-
-                })
-                .then(res => console.log(res))
-                .catch(err => console.error(err));
-        }
-        else {
-            alert("Enter all informations!!!");
-        }
-    }
+  
 
     return (
         <div>
@@ -223,8 +285,9 @@ const idNewPanier= sessionStorage.getItem('newPanier');
             <div style={{ height: "80px" }} ></div>
             <div class="bg-image d-flex justify-content-center align-items-center" style=
                 {{
-                    backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                    height: "300px"
+                    backgroundImage: 'url("/assets/img/categories/image.jpg")',
+                     backgroundSize:"100% 500px",
+                     height:"500px"
                 }}>
                 <div class="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
                     <h1 style={{ width: "rem", height: "50px" }}>
@@ -236,7 +299,7 @@ const idNewPanier= sessionStorage.getItem('newPanier');
             </div>
             <main className="mt-2 pt-2">
                 <div className="container wow fadeIn">
-                    <h2 className="my-5 h2 text-center">Checkout</h2>
+                   
                     <div className="row">
                         <div className="col-md-8 mb-4">
                             <div >
@@ -280,7 +343,7 @@ const idNewPanier= sessionStorage.getItem('newPanier');
                                     </div>
                                     <div className=" d-12 mb-3">
                                         <label for="country">Pays/région <strong><i class="text-danger"> *</i></strong> </label>
-                                        <div >
+                                        <div>
                                             <strong> France</strong>
                                         </div>
                                     </div>
@@ -339,8 +402,9 @@ const idNewPanier= sessionStorage.getItem('newPanier');
                                         <h1 style={{ height: "20px" }}></h1>
                                         <div class="btn btn-primary btn-block">
                                             <Stripe
-                                                stripeKey="pk_test_51JVedOHHuT2arISfwl0KCZiJRJ5OAqwq7v3MW2S64VHMe738Se02NboAB2snecH6V7VeATIvFYWQIpQW0NTZ3ie800LfcZawcr"
+                                                stripeKey="pk_test_51LWODtGyh8HknO0CBrFLQCapEGf5rBrMhBgFU2omfND9izE7PaNo0rRxSvce8ViSBr8DUkLO5nv6gw06QSUVKqlQ00t4PbHejo"
                                                 token={handleToken}
+                                                
                                             />
                                         </div>
 

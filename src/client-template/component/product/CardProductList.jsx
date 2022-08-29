@@ -16,11 +16,14 @@ import {
 
 import PanierService from './PanierService';
 import { number } from "../account/validation";
+import $ from 'jquery';
+import alertify from 'alertifyjs';
+import 'alertifyjs/build/css/alertify.css';
 
 function CardProductList(props) {
   //
   const [unsaved, setUnsaved] = useState(false)
-  const [saved, setSaved] = useState(false)
+  const [saved, setSaved] = useState()
 
   const idNewpanier = sessionStorage.getItem("newPanier");
 
@@ -59,7 +62,7 @@ function CardProductList(props) {
   //
   const [products, setProducts] = useState([]);
   const [nomCategorie, setNomCategorie] = useState("Abats")
-
+  let localCart = localStorage.getItem("cart");
   useEffect(() => {
     //ProductsService.allProducts().then(res=>(setProducts(res.data)));
 
@@ -68,6 +71,12 @@ function CardProductList(props) {
       setProductList(false)
       setProductGrid(true)
     }
+
+    if(localCart) {
+      if(localCart.length>1) localCart = JSON.parse(localCart);
+    }
+    //load persisted cart into state if it exists
+    if (localCart) setCart(localCart)
   }, []);
 
   const [details, setDetails] = useState(false);
@@ -89,80 +98,53 @@ function CardProductList(props) {
 
   const [priTotal, setPriTotal] = useState(Number(t))
   const [panier, setPanier] = useState([])
+  let [cart, setCart] = useState([])
 
 
 
   const AddtoCart = (product) => {
-    
-    setIdProduit(product.id)
+    //create a copy of our cart state, avoid overwritting existing state
+  let cartCopy = [...cart];
   
-    if (idNewpanier == null) {
-     
-      PanierService.newPanier().then(
-        res => {
-          alert("dd"+res.data.idPanier);
-          sessionStorage.setItem("newPanier",res.data.idPanier)
-          alert("eeeeeeeeee"+idNewpanier);
-        }
-      )
-    
-    }
-    // alert("cccccc"+product.id+"dd"+idNewpanier);
-    PanierService.addComposantPanier(formData)
-      .then(() => {
-        alert("cccccc"+product.id+"dd"+idNewpanier);
-        setUnsaved(false); setSaved(true);
+  //assuming we have an ID field in our item
 
-        //   registerSuccessfulLoging(product.price + priTotal);
-        // sessionStorage.setItem('aut',d);
-      }
-      )
-      .catch(() => {
-        alert("hhhhhh"); setUnsaved(true); setSaved(false) })
+  
+  //look for item in cart array
+  let existingItem = cartCopy.find(cartItem => cartItem.id == product.id);
+  
+  //if item already exists
+  if (existingItem) {
+      console.log('exist') //update item
+  } else { //if item doesn't exist, simply add it
+    cartCopy.push(product)
+    setSaved(product.id);
+
+  }
+  
+  //update app state
+  setCart(cartCopy)
+  
+  //make cart a string and store in local space
+  let stringCart = JSON.stringify(cartCopy);
+  localStorage.setItem("cart", stringCart)
 
   }
 
-  // const  AddtoCart =(product)=>{
+  $('.alertify_success_top').on('click', function() {
+    alertify.set('notifier','position', 'top-right');
+    alertify.success('Added to cart.').dismissOthers(); 
+});
 
-
-  //   sessionStorage.setItem('aut',d)
-
-  //    setIdProduit(product.id)
-
-
-  //   //  PanierService.newPanier().then(res=>(setPanier(res.data)),
-  //   //  sessionStorage.setItem('newPanier',panier.idPanier)
-  //   //  )
-
-  //     PanierService.addComposantPanier(formData)
-  //     .then(()=>{setUnsaved(false); setSaved(true);
-
-  //      //setR( product.price);
-  //     // setPriTotal(  (product.price + priTotal));
-
-  //       registerSuccessfulLoging(product.price + priTotal);
-  //       sessionStorage.setItem('aut',d)
-
-  //     }
-  //     )
-  //     .catch(()=>{setUnsaved(true); setSaved(false)})
-  //   }
-  // let data = new Map();
-  // // data.set("some_key", "some value");
-  //  data.set(1,[2,37],[4,32]);
-  //  data.set(2,6,7);
-  //  data.set(3,28,9);
-  //  sessionStorage.setItem('aut',data)
-
-  //  let r = new Map();
-
-  //  r.set(data)
+$('.alertify_error_top').on('click', function() {
+    alertify.set('notifier','position', 'top-right');
+    alertify.error('Already exist!!.').dismissOthers();
+});
 
   return (
 
     <div className=" container card " data-spy="scroll" >
       {productList &&
-        <div className="row align-items-start">
+        <div className="row align-items-start" style={{width:"1300px"}}>
           <div style={{ width: "50px" }} >
 
           </div>
@@ -183,7 +165,8 @@ function CardProductList(props) {
                     <div className="col-md-2 text-center">
                       <MDBCardImage cascade top src={"data:image/png;base64," + product.image}
                         alt="abats photo" />
-
+                      <br></br>
+                    
                     </div>
 
                     <div className="col-md-4" >
@@ -227,10 +210,10 @@ function CardProductList(props) {
                     <div className="col-md-3">
                       <div className="card-body">
                         <div className="mb-2">
-                          <span className="font-weight-bold h5">${product.price}</span>
+                          <span className="font-weight-bold h5">€ {product.price}</span>
                           {product.originPrice > 0 && (
                             <del className="small text-muted ml-2">
-                              ${product.originPrice}
+                              € {product.originPrice}
                             </del>
                           )}
                           {(product.discountPercentage > 0 || product.discountPrice > 0) && (
@@ -238,7 +221,7 @@ function CardProductList(props) {
                               -
                               {product.discountPercentage > 0
                                 ? product.discountPercentage + "%"
-                                : "$" + product.discountPrice}
+                                : "€" + product.discountPrice}
                             </span>
                           )}
                         </div>
@@ -251,8 +234,7 @@ function CardProductList(props) {
                         <div className="btn-group btn-block" role="group">
 
                           <button
-
-                            className="btn btn-sm btn-primary"
+                              className={(cart.find(cartItem => cartItem.id == product.id)) ? "btn btn-danger alertify_error_top":"btn btn-danger alertify_success_top"}
                             title="Add to cart"
 
                             onClick={
@@ -273,8 +255,9 @@ function CardProductList(props) {
                         </div>
                       </div>
                     </div>
-
+                    
                   </div>
+                  
               )}
           </div>
         </div>
@@ -290,12 +273,12 @@ function CardProductList(props) {
           {
             products.map(
               product =>
-                <div className="col-md-4" key={product.id}>
+                <div className="col-md-4" key={product.id} style={{width:"100%"}}>
 
                   <div  >
 
 
-                    <img src={product.image} className="card-img-top" alt="..." />
+                    <img src={"data:image/png;base64,"+product.image} className="card-img-top" alt="..."  height={300} width={200}/>
                     {product.isNew && (
                       <span className="badge bg-success position-absolute mt-2 ml-2">
                         New
@@ -327,9 +310,9 @@ function CardProductList(props) {
 
                       <div className="my-2">
 
-                        <span className="font-weight-bold h5">${product.price}</span>
+                        <span className="font-weight-bold h5">€ {product.price}</span>
                         {product.originPrice > 0 && (
-                          <del className="small text-muted ml-2">${product.originPrice}</del>
+                          <del className="small text-muted ml-2">€ {product.originPrice}</del>
                         )}
                         <span className="ml-2">
                           {Array.from({ length: product.star }, (_, key) => (
@@ -340,8 +323,11 @@ function CardProductList(props) {
                       <div className="btn-group btn-block" role="group">
                         <button
                           type="button"
-                          className="btn btn-sm  btn-danger"
+                          className={(cart.find(cartItem => cartItem.id == product.id)) ? "btn btn-danger alertify_error_top":"btn btn-danger alertify_success_top"}
                           title="Add to cart"
+                          onClick={
+                            () => AddtoCart(product)
+                          }
                         >
                           <FontAwesomeIcon icon={faCartPlus} />
                         </button>

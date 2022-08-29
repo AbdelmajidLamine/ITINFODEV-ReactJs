@@ -54,18 +54,20 @@ export default function Hom() {
 
                         </h2>
                         <div style={{ height: "60px" }} ></div>
-                        <div className="bg-image d-flex justify-content-center align-items-center" style=
+                        <div className="d-flex justify-content-center align-items-center" style=
                             {{
-                                backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                                height: "300px"
+                                backgroundImage: 'url("/assets/img/categories/abats.jpg")',
+                                backgroundSize:"100% 500px",
+                                height:"500px"
                             }}>
-                            <div className="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                                <h1 style={{ width: "rem", height: "50px" }}>
+                            
+                                <h1 style={{fontSize:"60px"}}>
 
                                     <strong className="text-white mb-0" >
                                         Abats  </strong>
                                 </h1>
-                            </div>
+                           
+                           
 
                         </div>
                         <div style={{ height: "40px" }} ></div>
@@ -78,18 +80,19 @@ export default function Hom() {
                         <div>  {CardProductGrid("Abats")}</div>
                         <div className="w-20 " style={{ width: "800px" }}></div>
                     </div>
-                    <div class="bg-image d-flex justify-content-center align-items-center" style=
+                    <div class="d-flex justify-content-center align-items-center" style=
                         {{
-                            backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                            height: "300px"
+                            backgroundImage: 'url("/assets/img/categories/Charu.jpg")',
+                            backgroundSize:"100% 500px",
+                            height:"500px"
                         }}>
-                        <div class="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                            <h1 style={{ width: "rem", height: "50px" }}>
+                        
+                            <h1 style={{ fontSize:"60px"}}>
 
                                 <strong class="text-white mb-0" >
                                     Charcuterie  </strong>
                             </h1>
-                        </div>
+                   
 
                     </div>
                     <div>
@@ -108,18 +111,20 @@ export default function Hom() {
                         </h2>
 
                     </div>
-                    <div className="bg-image d-flex justify-content-center align-items-center" style=
+                    <div className="d-flex justify-content-center align-items-center" style=
                         {{
-                            backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                            height: "300px"
+                            backgroundImage: 'url("/assets/img/categories/Boeuf.jpg")',
+                            backgroundSize:"100% 500px",
+                            height:"500px"
                         }}>
-                        <div className="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                            <h1 style={{ width: "rem", height: "50px" }}>
+                            
+                            <h1 style={{ fontSize:"60px"}}>
 
-                                <strong className="text-white mb-0" >
-                                    Le Bouef  </strong>
+                            <strong class="text-white mb-0" >
+                            Bouef  </strong>
                             </h1>
-                        </div>
+
+                        
 
                     </div>
                     <div>
@@ -139,19 +144,20 @@ export default function Hom() {
 
 
                     </div>
-                    <div style={{ height: "200px" }} />
-                    <div classNameclassName="bg-image d-flex justify-content-center align-items-center" style=
+                    <div className="d-flex justify-content-center align-items-center" style=
                         {{
-                            backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                            height: "300px"
+                            backgroundImage: 'url("/assets/img/categories/Agnea.jpg")',
+                            backgroundSize:"100% 500px",
+                            height:"500px"
                         }}>
-                        <div className="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                            <h1 style={{ width: "rem", height: "50px" }}>
+                            
+                            <h1 style={{ fontSize:"60px"}}>
 
-                                <strong className="text-white mb-0" >
-                                    Agneau  </strong>
+                            <strong class="text-white mb-0" >
+                            Agneau  </strong>
                             </h1>
-                        </div>
+
+                        
 
                     </div>
                     
@@ -171,18 +177,21 @@ export default function Hom() {
                         </h2>
 
                     </div>
-                    <div className="bg-image d-flex justify-content-center align-items-center" style=
+                   
+                    <div className="d-flex justify-content-center align-items-center" style=
                         {{
-                            backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                            height: "300px"
+                            backgroundImage: 'url("/assets/img/categories/prepa.jpg")',
+                            backgroundSize:"100% 500px",
+                            height:"500px"
                         }}>
-                        <div className="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                            <h1 style={{ width: "rem", height: "50px" }}>
+                            
+                            <h1 style={{ fontSize:"60px"}}>
 
-                                <strong className="text-white mb-0" >
-                                    Preparations  </strong>
+                            <strong class="text-white mb-0" >
+                            Preparations  </strong>
                             </h1>
-                        </div>
+
+                        
 
                     </div>
                     <div>
@@ -202,18 +211,20 @@ export default function Hom() {
 
                     </div>
 
-                    <div className="bg-image d-flex justify-content-center align-items-center" style=
+                    <div className="d-flex justify-content-center align-items-center" style=
                         {{
-                            backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                            height: "300px"
+                            backgroundImage: 'url("/assets/img/categories/veauB.jpg")',
+                            backgroundSize:"100% 500px",
+                            height:"500px"
                         }}>
-                        <div className="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                            <h1 style={{ width: "rem", height: "50px" }}>
+                            
+                            <h1 style={{ fontSize:"60px"}}>
 
-                                <strong className="text-white mb-0" >
-                                    Le Veau  </strong>
+                            <strong class="text-white mb-0" >
+                            Le Veau  </strong>
                             </h1>
-                        </div>
+
+                        
 
                     </div>
                     <div>
@@ -232,25 +243,21 @@ export default function Hom() {
                         </h2>
 
                     </div>
-                    <div className="bg-image d-flex justify-content-center align-items-center" style=
+                  
+                    <div className="d-flex justify-content-center align-items-center" style=
                         {{
-                            backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                            height: "300px"
+                            backgroundImage: 'url("/assets/img/categories/vol.jpg")',
+                            backgroundSize:"100% 500px",
+                            height:"500px"
                         }}>
-                            <div className="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                            <h1 style={{ width: "rem", height: "50px" }}>
+                            
+                            <h1 style={{ fontSize:"60px"}}>
 
-                                <strong className="text-white mb-0" >
-                                Volaille  </strong>
+                            <strong class="text-white mb-0" >
+                            Volaille  </strong>
                             </h1>
-                        </div>
-                        {/* <div classNameclassName="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                            <h1 style={{ width: "rem", height: "50px" }}>
 
-                                <strong className="text-white mb-0" >
-                                    Volaille  </strong>
-                            </h1>
-                        </div> */}
+                        
 
                     </div>
                     <div>

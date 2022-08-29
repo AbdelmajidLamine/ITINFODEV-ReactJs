@@ -1,119 +1,249 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import ReactApexChart from 'react-apexcharts'
+import CommandeService from './CommandeService'
+import ProductsService from './ProductsService'
+import ClientService from './ClientService'
+import ApexChart from './ApexChart';
+import axios from 'axios';
+import ComposantProducts from './ComposantProducts';
+import { Link, NavLink } from 'react-router-dom';
+import ApexChartTwo from './ApexChartTwo';
 
-export default function DashboardComponent () {
-    return(
+
+
+
+export default function DashboardComponent() {
+
+    const [commandes,setCommandes]=useState([])
+    const [priceTotal,setPriceTotal]=useState(0)
+    const [products,setProducts]=useState([])
+    const [client,setClient]=useState([])
+    const [composante,setComposante]=useState([])
+
+
+
+    let COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
+
+    let pieData = [
+        {
+            "name": "Profit",
+            "value": priceTotal
+        },
+        {
+            "name": "products",
+            "value": products.length
+        },
+        {
+            "name": "customers",
+            "value": client.length
+        },
+       
+    ];
+
+    let firstChart= {
+          
+        series: [priceTotal, products.length, client.length],
+        options: {
+          chart: {
+            width: 380,
+            type: 'donut',
+          },
+          plotOptions: {
+            pie: {
+              startAngle: -90,
+              endAngle: 270
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          fill: {
+            type: 'gradient',
+          },
+          legend: {
+            formatter: function(val, opts) {
+              return val + " - " + opts.w.globals.series[opts.seriesIndex]
+            }
+          },
+        //   title: {
+        //     text: 'Gradient Donut with custom Start-angle'
+        //   },
+          responsive: [{
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }]
+        },
+    }
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active) {
+            return (
+                <div className="custom-tooltip" >
+                    <label>{`${payload[0].name} : ${payload[0].value}%`}</label>
+                </div>
+            );
+        }
+
+        return null;
+    };
+    useEffect(() => {
+        CommandeService.TotalPriceCommandes().then(res=>(setPriceTotal(res.data)))
+        ProductsService.allProducts().then(res=>(setProducts(res.data)))
+        ClientService.getAllClient().then(res=>(setClient(res.data)))
+       
+        
+        
+    },[]);
+
+
+    return (
         <div>
-            <div className="d-sm-flex justify-content-between align-items-center mb-4">
-<h3 className="text-dark mb-0">Dashboard</h3><a className="btn btn-primary btn-sm d-none d-sm-inline-block" role="button"   href="/#"><i className="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
-</div>
-<div className="row">
-<div className="col-md-6 col-xl-3 mb-4">
-    <div className="card shadow border-left-primary py-2">
-        <div className="card-body">
-            <div className="row align-items-center no-gutters">
-                <div className="col mr-2">
-                    <div className="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Earnings (monthly)</span></div>
-                    <div className="text-dark font-weight-bold h5 mb-0"><span>$40,000</span></div>
-                </div>
-                <div className="col-auto"><i className="fas fa-calendar fa-2x text-gray-300"></i></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div className="col-md-6 col-xl-3 mb-4">
-    <div className="card shadow border-left-success py-2">
-        <div className="card-body">
-            <div className="row align-items-center no-gutters">
-                <div className="col mr-2">
-                    <div className="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Earnings (annual)</span></div>
-                    <div className="text-dark font-weight-bold h5 mb-0"><span>$215,000</span></div>
-                </div>
-                <div className="col-auto"><i className="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div className="col-md-6 col-xl-3 mb-4">
-    <div className="card shadow border-left-info py-2">
-        <div className="card-body">
-            <div className="row align-items-center no-gutters">
-                <div className="col mr-2">
-                    <div className="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Tasks</span></div>
-                    <div className="row no-gutters align-items-center">
-                        <div className="col-auto">
-                            <div className="text-dark font-weight-bold h5 mb-0 mr-3"><span>50%</span></div>
+            <h5 class="mb-3" ><strong>Dashboard</strong></h5>
+                
+                <div class="row mt-1">
+                    <div class="col-sm-8 col-md-8">
+                        
+                        <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+                            <h6 class="mb-3">Revenue Analytics</h6>
+                            
+                            <ApexChart />
+                            
                         </div>
-                        <div className="col">
-                            <div className="progress progress-sm">
-                                <div className="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style={{width : '50%'}}><span className="sr-only">50%</span></div>
+                        
+
+                    </div>
+
+                    <div class="col-sm-4 col-md-4">
+                        
+                        <div class="bg-white border shadow mb-4">
+                            <div class="media p-4">
+                                <div class="align-self-center mr-3 rounded-circle notify-icon_2 bg-white">
+                                    <i class="fa fa-globe text-theme"></i>
+                                </div>
+                                <div class="media-body pl-2">
+                                    <h3 class="mt-0 mb-0"><strong>{priceTotal}</strong></h3>
+                                    <p><small class="bc-description text-theme">Total Revenue</small></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border shadow mb-4">
+                            <div class="media p-4">
+                                <div class="align-self-center mr-3 rounded-circle notify-icon_2 bg-white">
+                                    <i class="fa fa-heart-o text-danger"></i>
+                                </div>
+                                <div class="media-body pl-2">
+                                    <h3 class="mt-0 mb-0"><strong>{client.length}</strong></h3>
+                                    <p><small class="bc-description text-danger">Customers</small></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white border shadow">
+                            <div class="media p-4">
+                                <div class="align-self-center mr-3 rounded-circle notify-icon_2 bg-white">
+                                    <i class="fa fa-lightbulb text-success"></i>
+                                </div>
+                                <div class="media-body pl-2">
+                                    <h3 class="mt-0 mb-0"><strong>{products.length}</strong></h3>
+                                    <p><small class="text-success bc-description">Total Products</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                <div class="col-sm-8 col-md-8">
+                        
+                        <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+                            <h6 class="mb-3">Revenue Analytics</h6>
+                            
+                            <ApexChartTwo />
+                            
+                        </div>
+                        
+
+                    </div>
+
+
+                    {/* <div class="col-sm-6 col-md-4">
+                       
+                        <div class="mt-1 mb-3 p-3 button-container bg-white shadow-sm border">
+                            <h6 class="mb-3">Store summary</h6><hr></hr>
+
+                            <ReactApexChart options={firstChart.options} series={firstChart.series} type="donut" width={340} />
+                        </div>
+                    </div> */}
+
+                    <div class="col-sm-12 col-md-4">
+                       
+                        <div class="card shadow">
+                            <div class="card-body">
+                            <h6 class="mb-3">Store summary</h6><hr></hr>
+                            <ReactApexChart options={firstChart.options} series={firstChart.series} type="donut" width={340} />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="col-auto"><i className="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div className="col-md-6 col-xl-3 mb-4">
-    <div className="card shadow border-left-warning py-2">
-        <div className="card-body">
-            <div className="row align-items-center no-gutters">
-                <div className="col mr-2">
-                    <div className="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending Requests</span></div>
-                    <div className="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
-                </div>
-                <div className="col-auto"><i className="fas fa-comments fa-2x text-gray-300"></i></div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div className="row">
-<div className="col ">
-    <div className="card shadow mb-4">
-        <div className="card-header py-3">
-            <h6 className="text-primary font-weight-bold m-0">Todo List</h6>
-        </div>
-        <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-                <div className="row align-items-center no-gutters">
-                    <div className="col mr-2">
-                        <h6 className="mb-0"><strong>Lunch meeting</strong></h6><span className="text-xs">10:30 AM</span>
-                    </div>
-                    <div className="col-auto">
-                        <div className="custom-control custom-checkbox"><input className="custom-control-input" type="checkbox" id="formCheck-1"/><label className="custom-control-label" htmlFor="formCheck-1"></label></div>
-                    </div>
-                </div>
-            </li>
-            <li className="list-group-item">
-                <div className="row align-items-center no-gutters">
-                    <div className="col mr-2">
-                        <h6 className="mb-0"><strong>Lunch meeting</strong></h6><span className="text-xs">11:30 AM</span>
-                    </div>
-                    <div className="col-auto">
-                        <div className="custom-control custom-checkbox"><input className="custom-control-input" type="checkbox" id="formCheck-2"/><label className="custom-control-label" htmlFor="formCheck-2"></label></div>
-                    </div>
-                </div>
-            </li>
-            <li className="list-group-item">
-                <div className="row align-items-center no-gutters">
-                    <div className="col mr-2">
-                        <h6 className="mb-0"><strong>Lunch meeting</strong></h6><span className="text-xs">12:30 AM</span>
-                    </div>
-                    <div className="col-auto">
-                        <div className="custom-control custom-checkbox">
-                            <input className="custom-control-input" type="checkbox" id="formCheck-3" />
-                                <label className="custom-control-label" htmlFor="formCheck-3"></label>
+
+                
+
+                <div class="mt-4 mb-4 bg-white border shadow lh-sm">
+                    
+                    <div class="product-list">
+                        
+                        <div class="row mb-0 px-3 pt-3">
+                            <div class="col-sm-8 pt-2"><h6 class="mb-4 bc-header">Recent Sales</h6></div>
+                            <div class="col-sm-4 text-right pb-3">
+                                <div class="pull-right mr-3 btn-order-bulk">
+                                    <button class="btn btn-theme btn-round"><Link  to="/adminMain/product" className='text-white'>View all</Link></button>
+                                </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive product-list">
+                            
+                            <table class="table mt-0" id="productList">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Customer</th>
+                                        <th>Categories</th>
+                                        {/* <th>Popularity</th> */}
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    {
+                                        products.map((element,index)=>
+                                           (index<3 ? <ComposantProducts idProduct={element.id}  />:null)
+                                        )
+                                    }
+                                       
+                                  
+                                    </tbody>
+                            </table>
                         </div>
                     </div>
+               
                 </div>
-            </li>
-        </ul>
-    </div>
-</div>
+            
 
-</div>
+
+    
         </div>
     )
 }

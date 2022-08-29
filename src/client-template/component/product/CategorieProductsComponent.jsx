@@ -20,7 +20,6 @@ import { colors } from '@material-ui/core';
 export default function CategorieComponenet(props) {
 
     const [unsaved, setUnsaved] = useState(false)
-    const [saved, setSaved] = useState(false)
 
     const [idPanier, setIdPanier] = useState(1)
     const [idProduit, setIdProduit] = useState(1)
@@ -43,12 +42,20 @@ export default function CategorieComponenet(props) {
 
     //
     const [products, setProducts] = useState([]);
+    let [cart, setCart] = useState([])
+    const [saved, setSaved] = useState()
     const [nomCategorie, setNomCategorie] = useState(props)
-
+    let localCart = localStorage.getItem("cart");
     useEffect(() => {
         //ProductsService.allProducts().then(res=>(setProducts(res.data)));
 
         ProductsService.getProduitByCategorie(props).then(res => (setProducts(res.data)));
+
+        if(localCart) {
+            if(localCart.length>1) localCart = JSON.parse(localCart);
+          }
+          //load persisted cart into state if it exists
+          if (localCart) setCart(localCart)
     }, []);
 
     const [details, setDetails] = useState(false);
@@ -66,19 +73,30 @@ export default function CategorieComponenet(props) {
 
 
     const AddtoCart = (product) => {
-
-        setIdProduit(product.id)
-
-        PanierService.addComposantPanier(formData)
-
-            .then(() => { setUnsaved(false); setSaved(true) })
-            .catch(() => { setUnsaved(true); setSaved(false) })
-        // .then(response => {
-        //         if (response.status === 200) {
-        //             alert('Added to cart!');
-        //         }
-        //     })
-        //     .catch(err => console.log(err));
+        //create a copy of our cart state, avoid overwritting existing state
+        let cartCopy = [...cart];
+        
+        //assuming we have an ID field in our item
+      
+        
+        //look for item in cart array
+        let existingItem = cartCopy.find(cartItem => cartItem.id == product.id);
+        
+        //if item already exists
+        if (existingItem) {
+            console.log('exist') //update item
+        } else { //if item doesn't exist, simply add it
+          cartCopy.push(product)
+          setSaved(product.id);
+      
+        }
+        
+        //update app state
+        setCart(cartCopy)
+        
+        //make cart a string and store in local space
+        let stringCart = JSON.stringify(cartCopy);
+        localStorage.setItem("cart", stringCart)
     }
     return (
         <div className="card shadow">
@@ -104,30 +122,6 @@ export default function CategorieComponenet(props) {
 
             </div>
 
-            {/* <MDBCard  >
-                <MDBView className="w-auto p-0 " >
-                           
-<div class="bg-image d-flex justify-content-center align-items-center" style=
-     {{ backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-     width: "", height: "200px"}}
-    >
-    <h1 style={{ width: "60rem", height: "50px",backgroundColor:'rgba(57, 192, 237, 0.6)' }}>
-
-<strong  > 
- Categories   {nomCategorie}</strong>
-</h1>
-</div>
-               
-                </MDBView>
-                
-                <MDBCarouselCaption // style={{ backgroundColor:'rgba(249, 49, 84, 0.6)' }}
-                >
-                   
-                   
-                </MDBCarouselCaption>
-            
-            </MDBCard> */}
-            <h4 />
             <h1 />
             <h4 />
             <Breadcrumbs className=" my-3 nav justify-content-center">
@@ -173,7 +167,7 @@ export default function CategorieComponenet(props) {
                                 <div className="col-md-3" key={product.id}>
 
                                     <div  >
-                                        <img src={product.image} className="card-img-top" alt="..." />
+                                        <img  src={"data:image/png;base64,"+product.image} className="card-img-top" alt="..." height={300} width={200} />
                                         {product.isNew && (
                                             <span className="badge bg-success position-absolute mt-2 ml-2">
                                                 New
@@ -215,8 +209,11 @@ export default function CategorieComponenet(props) {
                                             <div className="btn-group btn-block" role="group">
                                                 <button
                                                     type="button"
-                                                    className="btn btn-sm  btn-danger"
+                                                    className={saved==product.id ? "btn btn-success":"btn btn-danger"}
                                                     title="Add to cart"
+                                                    onClick={
+                                                        () => AddtoCart(product)
+                                                      }
                                                 >
                                                     <FontAwesomeIcon icon={faCartPlus} />
                                                 </button>

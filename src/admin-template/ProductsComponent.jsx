@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link,NavLink,useHistory } from 'react-router-dom';
 import ProductsService from './ProductsService';
 import UpdateProductComponent from './UpdateProduct';
+import $ from 'jquery'
+import "jquery/dist/jquery.min.js";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import swal from 'sweetalert';
 
 export default function ProductsComponenet() {
 
@@ -40,11 +45,23 @@ export default function ProductsComponenet() {
     //   };
     const [products,setProducts]=useState([]);
     useEffect(() => {
-        ProductsService.allProducts().then(res=>(setProducts(res.data)));
+        ProductsService.allProducts().then((res) => res.data)
+        .then((data) => {
+            data.sort((a, b) => b.id - a.id);
+            setProducts(data)
+        });
+        setTimeout(() => {
+            $(document).ready( function () {
+                
+                $('#productList').DataTable();
+            } );
+            },1000)
     },[]);
     
     const [details,setDetails]= useState(false);
     const [product,setProduct]= useState('');
+    const [Delete,setDelete]=useState(false)
+    const [notDelete,setNotDelete]=useState(false)
 
     const hideDetails = ()=>{
         setDetails(false);}
@@ -62,82 +79,134 @@ export default function ProductsComponenet() {
         setProduct(product)
         setDetails(true);
     }
+     
+    const deleteProduct=(id)=>{
+        $(".show_alert_promise_two").on('click', function() {
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this order!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                        ProductsService.deleteProduct(id)
+                        .then(res=>setDelete(true),setNotDelete(false))
+                        .catch(err=>setDelete(false),setNotDelete(true))
+                            swal("Poof! your product has been deleted!!", {
+                                icon: "success",
+                              });
+                              setTimeout(() => {
+                                window.location.reload(false)
+                                },1000)
+                } else {
+                  swal("Your product is safe!");
+             
+                }
+            });
+        });
+        
+    }
+
     
-    return (<div className="card shadow">
-                <div className="card-header py-3">
-                    <p className="text-primary m-0 font-weight-bold">Products </p>
-                </div>
-           {!details && <div className="card-body">
-                <div className="row">
-                    <div className="col-md-6 text-nowrap">
-                        <Link to="/adminMain/new-product"  className="btn btn-success" ><i className="fas fa-plus-circle"></i> new product</Link>
+    
+    return (
+  
+        <div class="col-sm-12 col-xs-12 content pt-3 pl-0">
+            <h5 class="mb-0" ><strong>Products</strong></h5>
+            <span class="text-secondary">Dashboard <i class="fa fa-angle-right"></i> products</span>
+            
+            <div class="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
+               
+                <div class="product-list">
+                    
+                    <div class="row border-bottom mb-4">
+                        <div class="col-sm-8 pt-2"><h6 class="mb-4 bc-header">Product listing</h6></div>
+                        <div class="col-sm-4 text-right pb-3">
+                            <button class="btn btn-round btn-theme"><i class="fa fa-plus"></i> <Link to="/adminMain/new-product" className="text-white">Add product</Link></button>
+                        </div>
                     </div>
-                   
-                </div>
-                <div className="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                    <table className="table my-0" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>name</th>
-                                <th>statut</th>                               
-                                <th>image</th>
-                                <th>price</th>
-                                <th></th>       
-                           </tr>
-                        </thead>
-                        <tbody>
-                           {
+                    
+                    {!details && <div class="table-responsive product-list">
+                        
+                        <table class="table table-bordered table-striped mt-3" id="productList">
+                            <thead>
+                                <tr>
+                                    <th width="6%">Image</th>
+                                    <th>Product name</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {
                                products.map(
                                  
                                    product => 
-                                   <tr key={product.id} >
-                                   <td>{product.id}</td>
-                                   <td >{product.name}</td>
-                                   <td>{product.status}</td>
-                                   <td> <div>  
-                                       <img  className="blob-to-image" src={ "data:image/png;base64,"+product.image } alt='product img'>
-                                       </img>
-                                       {/* <img  className="blob-to-image" src={ URL.createObjectURL( product.image} alt='product img'>
-                                       </img> */}
-                                       </div></td>
-                                   <td>{product.price} dhs</td>
-                                   <td><button className="btn btn-sm btn-warning" onClick ={()=>showDetails(product)} >show</button></td> 
-                                   </tr>  
-                               )
-                           }
-                        </tbody>
-                    </table>
-                </div>
-            </div> }    
-            { details &&
-                <div className="card-body">
-                    <table className="table my-0" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>Stock</th>
-                                <th>details</th>   
-                                <th>categorie</th>      
-                           </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{product.stock}</td>
-                                <td>{product.shortDescription}</td>
-                                <td>{product.category.nomCategorie}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button className="btn btn-sm btn-warning " onClick={hideDetails}> returner</button> 
-                    <button className="btn "  >
+                                <tr key={product.id}>
+                               
+                                    <td class="align-middle"><img  src={ "data:image/png;base64,"+product.image } width="80px"  alt="" /></td>
+                                    <td class="align-middle">
+                                        <h6><strong>{product.name}</strong></h6>
                         
-                         </button> 
-                    
+                                    </td>
+                                    <td class="align-middle">€ {product.price}</td>
+                                    <td class="align-middle">{product.status==1 ? <span class="text-success">InStock</span> : <span class="text-danger">OutStock</span>}</td>
+                                    <td class="align-middle text-center">
+                                         <button class="btn btn-link text-success p-1" onClick ={()=>showDetails(product)}><i class="fa fa-eye"></i></button>
+                                         <Link  to={{ pathname:"/adminMain/UpdateProduct" ,state:product.id}}><button class="btn btn-link text-theme p-1"><i class="fa fa-pencil"></i></button></Link>
+                                        <button class="btn btn-link text-danger p-1 show_alert_promise_two" onClick ={()=>deleteProduct(product.id)}><i class="fas fa-trash"></i></button>
+                                        
+                                    </td>
+                                </tr>
+                               )}
+                            </tbody>
+                        </table>
+                    </div>
+                     }
 
-                    <button className="btn btn-sm btn-warning "   onClick={()=>registerSuccessfulLoging(product.id)}> update </button> 
-                   
-                 </div>                
-            }     
+                { details &&
+                         <table class="table table-bordered table-striped mt-3" id="productList">
+                         <thead>
+                             <tr>
+                                 <th width="6%">Image</th>
+                                 <th>Product name</th>
+                                 <th>Stock</th>
+                                 <th>details</th>
+                                 <th>categorie</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                            
+                             <tr >
+                            
+                                 <td class="align-middle"><img  src={ "data:image/png;base64,"+product.image } width="80px"  alt="" /></td>
+                                 <td class="align-middle">
+                                     <h6><strong>{product.name}</strong></h6>
+                                     
+                                 </td>
+                                 <td class="align-middle">{product.stock}</td>
+                                 <td class="align-middle"><span class="text-danger">{product.shortDescription}</span></td>
+                                 <td class="align-middle text-center">
+                                 {product.category.nomCategorie}
+                                     
+                                 </td>
+                             </tr>
+                            
+                         </tbody>
+                     </table>
+                  }
+
+
+                </div>
+                               
+    
             </div>
+
+         
+
+        </div>
     )
 }

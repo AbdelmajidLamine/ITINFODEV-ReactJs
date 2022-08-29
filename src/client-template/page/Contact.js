@@ -61,10 +61,11 @@ const Contact = () => {
 
         <div class="bg-image d-flex justify-content-center align-items-center" style=
           {{
-            backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-            height: "200px"
+            backgroundImage: 'url("/assets/img/produits/products.jpg")',
+             backgroundSize:"100% 600px",
+             height:"600px"
           }}>
-          <div class="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "200px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+          <div class="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
             <h1 style={{ width: "rem", height: "50px" }}>
 
               <strong class="text-white mb-0" >
@@ -265,7 +266,7 @@ const Contact = () => {
 
                     <div className="form-outline mb-4">
                       <div className="form-outline">
-                        <input type="text" type="text"
+                        <input type="text" 
                           placeholder=" Nom et prenom"
                           onChange={(event) => setName(event.target.value)}
                           id="materialFormRegisterNameEx"
@@ -289,7 +290,7 @@ const Contact = () => {
 
 
                     <div className="form-outline mb-4">
-                      <input type="text" type="tel"
+                      <input type="text" 
 
                         placeholder=" télephone"
                         onChange={(event) => setTel(event.target.value)}

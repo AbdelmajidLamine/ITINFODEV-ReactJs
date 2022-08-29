@@ -3,15 +3,25 @@ import axios from 'axios';
 export default function ProfileComponent() {
 
      const [update,setUpdate]= useState(false)
-     const [unupdate,setUnpdate]= useState(false)
+     const [unupdate,setUnupdate]= useState(false)
      const[data,setdata]=useState(false)
      const idAdmin=sessionStorage.getItem('authentIdAdmin')
      const[newPasword,setNewPasword]=useState('')
      const[password,setpassword]= useState('')
-     const[admin,setAdmin]=useState([]);
+     const[admin,setAdmin]=useState([])
+     const[image,setImage]=useState('')
+     const[newPseudo,setNewPseudo]=useState('')
+     const[newEmail,setNewEmail]=useState('')
+     const profilData= new FormData();
+
+        profilData.append( "idAdmin",idAdmin);
+        profilData.append("image" ,image);
+        profilData.append("pseudo",newPseudo);
+        profilData.append("email",newEmail);
+
    const formData= new FormData();
 
-   formData.append( "idadmin",idAdmin);
+   formData.append( "idAdmin",idAdmin);
    formData.append("newPassword" ,newPasword);
    formData.append("password",password);
    useEffect (()=>{
@@ -24,53 +34,38 @@ export default function ProfileComponent() {
         if(password && newPasword)
         {
         axios.put(`http://localhost:8080/modifypasswordAdmin` ,formData)
-            .then(()=>{setUnpdate(false); setUpdate(true);setdata(false)})
-            .catch(()=>{setUnpdate(true);  setUpdate(false);setdata(false)})
+            .then(()=>{setUnupdate(false); setUpdate(true);setdata(false)})
+            .catch(()=>{setUnupdate(true);  setUpdate(false);setdata(false)})
            
         }
         else 
        { setdata(true),
-        setUnpdate(false)
+        setUnupdate(false)
     }
+    }
+
+    const updateProfile=()=>{
+        console.log(profilData)
+           if(image || newEmail || newPseudo){
+                    axios.post(`http://localhost:8080/updateProfilImage` ,profilData)
+                    .then((res)=>{setUnupdate(false); setUpdate(true);setdata(false)})
+                    .catch((res)=>{setUnupdate(true);  setUpdate(false);setdata(false)})
+           }
     }
 
     return (
         <div>
                     <h3 className="text-dark mb-4">Profile  </h3>
+                    <span class="text-secondary">Dashboard <i class="fa fa-angle-right"></i> Profile</span>
                     <div className="row mb-3">
                         <div className="col-lg-4">
                             <div className="card mb-3">
-                                <div className="card-body text-center shadow"><img className="rounded-circle mb-3 mt-4" src="/assets/img/admins/avatar4.jpeg" width="160" height="160" alt="gg"/>
-                                    <div className="mb-3"><button className="btn btn-primary btn-sm" type="button">Change Photo</button></div>
+                                <div className="card-body text-center shadow"><img className="rounded-circle mb-3 mt-4" src={admin.image ? "data:image/png;base64,"+admin.image : "/assets/img/admins/avatar4.jpeg"} width="160" height="160" alt="gg"/>
+                                    <div className="mb-3"> <label>Photos: </label>
+                                <input type="file" name="image" accept="image/png, image/jpeg" onChange={event=>setImage(event.target.files[0])}/></div>
                                 </div>
                             </div>
-                            {/* <div className="card shadow mb-4">
-                                <div className="card-header py-3">
-                                    <h6 className="text-primary font-weight-bold m-0">Projects</h6>
-                                </div>
-                                <div className="card-body">
-                                    <h4 className="small font-weight-bold">Server migration<span className="float-right">20%</span></h4>
-                                    <div className="progress progress-sm mb-3">
-                                        <div className="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style={{width:"20%"}}><span className="sr-only">20%</span></div>
-                                    </div>
-                                    <h4 className="small font-weight-bold">Sales tracking<span className="float-right">40%</span></h4>
-                                    <div className="progress progress-sm mb-3">
-                                        <div className="progress-bar bg-warning" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{width: "40%"}}><span className="sr-only">40%</span></div>
-                                    </div>
-                                    <h4 className="small font-weight-bold">Customer Database<span className="float-right">60%</span></h4>
-                                    <div className="progress progress-sm mb-3">
-                                        <div className="progress-bar bg-primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style={{width: '60%'}}><span className="sr-only">60%</span></div>
-                                    </div>
-                                    <h4 className="small font-weight-bold">Payout Details<span className="float-right">80%</span></h4>
-                                    <div className="progress progress-sm mb-3">
-                                        <div className="progress-bar bg-info" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style={{width: '80%'}}><span className="sr-only">80%</span></div>
-                                    </div>
-                                    <h4 className="small font-weight-bold">Account setup<span className="float-right">Complete!</span></h4>
-                                    <div className="progress progress-sm mb-3">
-                                        <div className="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: '100%'}}><span className="sr-only">100%</span></div>
-                                    </div>
-                                </div>
-                            </div> */}
+                         
                         </div>
                         <div className="col-lg-8">
                             <div className="row mb-3 d-none">
@@ -113,16 +108,16 @@ export default function ProfileComponent() {
                                             <form>
                                                 <div className="form-row">
                                                     <div className="col">
-                                                        <div className="form-group"><label htmlFor="username"><strong>Nom et Prenom</strong></label><input className="form-control" type="text" placeholder={admin.pseudo} name="username"/></div>
+                                                        <div className="form-group"><label htmlFor="username"><strong>Nom et Prenom</strong></label><input className="form-control" type="text" placeholder={admin.pseudo} name="username" onChange={(event)=>setNewPseudo(event.target.value)}/></div>
                                                     </div>
                                                    
                                                 </div>
                                                 <div className="form-row">
                                                 <div className="col">
-                                                        <div className="form-group"><label htmlFor="email"><strong>Email </strong></label><input className="form-control" type="email" placeholder={admin.email} name="email"/></div>
+                                                        <div className="form-group"><label htmlFor="email"><strong>Email </strong></label><input className="form-control" type="email" placeholder={admin.email} name="email" onChange={(event)=>setNewEmail(event.target.value)}/></div>
                                                     </div>
                                                 </div>
-                                                <div className="form-group"><button className="btn btn-primary btn-sm" type="button">enregistrer</button></div>
+                                                <div className="form-group"><button className="btn btn-primary btn-sm" type="button" onClick={updateProfile} >enregistrer</button></div>
                                             </form>
                                         </div>
                                     </div>

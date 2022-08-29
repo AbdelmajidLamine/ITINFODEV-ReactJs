@@ -16,7 +16,7 @@ const Footer = () => {
               <strong>Company name</strong>
             </h6>
             <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: "60px" }} />
-            <p>
+            <p style={{ color: "#858796" }}>
               <img src="/logo.png" />
               Boucherie
             </p>
@@ -56,22 +56,22 @@ const Footer = () => {
             </h6>
             <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: "60px" }} />
             <p>
-              <a >2 Rue Ernest Renan, 45100</a>
+              <a style={{ color: "#858796" }}>2 Rue Ernest Renan, 45100</a>
             </p>
             <p>
-              <a >Orléans, France</a>
+              <a style={{ color: "#858796" }} >Orléans, France</a>
             </p>
             <p className="fa  mr-3">
               <a ></a>
             </p>
             <p>
-              <strong className="text-uppercase font-weight-bold ">Overt</strong>
+              <strong className="text-uppercase font-weight-bold " style={{ color: "#858796" }}>Overt</strong>
             </p>
             <p>
-              <a >Tous les jours</a>
+              <a style={{ color: "#858796" }}>Tous les jours</a>
             </p>
             <p>
-              <a >Du 9:00 à  19:30</a>
+              <a style={{ color: "#858796" }}>Du 9:00 à  19:30</a>
             </p>
           </MDBCol>
           <MDBCol md="4" lg="3" xl="3" className="mb-4">
@@ -80,13 +80,13 @@ const Footer = () => {
             </h6>
             <hr className="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: "60px" }} />
 
-            <p>
-              <i className="fa fa-envelope mr-3" /> org12@hotmail.fr
+            <p style={{ color: "#858796" }}>
+              <i className="fa fa-envelope mr-3"  /> org12@hotmail.fr
             </p>
-            <p>
+            <p style={{ color: "#858796" }}>
               <i className="fa fa-phone mr-3" /> +33238630042
             </p>
-            <p>
+            <p style={{ color: "#858796" }}>
               <i className="fa fa-print mr-3" /> + 01 234 567 89
             </p>
             <p>

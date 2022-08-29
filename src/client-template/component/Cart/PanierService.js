@@ -24,7 +24,7 @@ class PanierService {
     }
     
     addComposantPanier = (data) => {
-        return axios.post('http://localhost:8080/addPanier',data)
+         axios.post('http://localhost:8080/addPanier',data)
     }
 
     deleteComposantPanier(idComposante) {
@@ -41,10 +41,17 @@ class PanierService {
     }
 
     getCoup(coupon) {
-        return axios.get('http://localhost:8080/coupons/'+coupon);
+        return axios.get(`http://localhost:8080/coupons/${coupon}`);
     }
   addCommand(data){
       axios.post('http://localhost:8080/saveCommande',data);
+  }
+  addPanier(data){
+    return axios.post('http://localhost:8080/newPanier',data);
+  }
+
+  maxIdPanier(){
+    return axios.get('http://localhost:8080/maxId')
   }
 
 }

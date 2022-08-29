@@ -12,7 +12,10 @@ class AccountService {
     }
 
     getCommande(mail){
-        return axios.get('http://localhost:8080/commandess/'+mail)
+        return axios.get(`http://localhost:8080/commandess/${mail}`)
+    }
+    findByLivraisonCommande(id){
+        return axios.get(`http://localhost:8080/livraisonCommande/${id}`)
     }
 
 

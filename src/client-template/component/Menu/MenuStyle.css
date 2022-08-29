@@ -55,7 +55,22 @@
 }
 
 
+.bar__mobile{
+    display: none;
+}
 
+@media (max-width: 767px) {
+    .bar__desktop{
+        display: none;
+    }
+    .bar__mobile{
+        position: relative;
+        left: 0%;
+        top: 70px;
+        
+        display: flex;
+    }
+}
 a[data-toggle="collapse"]{
     position: relative;
 }

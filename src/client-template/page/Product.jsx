@@ -22,6 +22,12 @@ export default function Product() {
     window.location.reload(false);
     
 }
+const categorie =(props)=>{
+
+    sessionStorage.setItem('categorie',props)
+   
+
+}
     return (
         
         
@@ -32,8 +38,9 @@ export default function Product() {
             <div style={{ height: "20px" }} ></div>
             <div className="bg-image d-flex justify-content-center align-items-center" style=
                 {{
-                    backgroundImage: 'url("https://boucherie2002-orleanslasource.fr/wp-content/uploads/2020/08/boucherie-en-ligne.jpg")',
-                    height: "300px"
+                    backgroundImage: 'url("/assets/img/produits/products.jpg")',
+                            backgroundSize:"100% 600px",
+                            height:"600px"
                 }}>
                 <div className="w-100 p-3 d-flex justify-content-center align-items-center" style={{ height: "300px", backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
                     <h1 style={{ width: "rem", height: "50px" }}>
@@ -64,12 +71,55 @@ export default function Product() {
 
             </Breadcrumbs>
             </div>
+            
             <div style={{ height: "10px" }} ></div>
                 <Router>
+                <div className="d-md-none d-sm-flex">
+                    <div className='d-block'>
+
+                    
+                    <div className="text-center">
+                            <h3>Categories </h3>
+                    </div>
+                    <div className="d-row-flex d-flex" style={{width:"100%"}}>
+                    
+                    
+                    <a className=" ml-3" onClick={()=>categorie('Abats')}>
+                    <Link to={"/product/abats"}><span className=" pl-5 pr-5"><p>Abats</p></span></Link>
+                    </a>
+                    
+                    <a className=" ml-3" onClick={()=>categorie('Charcuterie')}>
+                    <Link to={"/product/charcuterie"}><span className=" pl-5 pr-5"><p>Charcuterie</p></span></Link>
+                    </a>
+                    
+                    <a className=" ml-3" onClick={()=>categorie('Agneau')}>
+                    
+                    <Link to={"/product/agneau"}><span className=" pl-5 pr-5"><p>L'agneau</p></span></Link>
+                    </a>
+                    
+                    <a className=" ml-3" onClick={()=>categorie('Preparations')}>
+                    <Link to={"/product/preparations"}><span className=" pl-5 pr-5"><p>Preparations</p></span></Link>
+
+                    </a>
+                    
+                    <a className=" ml-3" onClick={()=>categorie('Le Bouef')}>
+                    <Link to={"/product/bouef"}><span className=" pl-5 pr-5"><p>Bouef</p></span></Link>
+                    </a>
+                    
+                    <a className=" ml-3" onClick={()=>categorie('Le Veau')}>
+                    <Link to={"/product/veau"}><span className=" pl-5 pr-5"><p>Veau</p></span></Link>
+                    </a>
+                    
+                    <a className=" ml-3" onClick={()=>categorie('Volaille')}>
+                    <Link to={"/product/volaille"}><span className=" pl-5 pr-5"><p>Volaille</p></span></Link>
+                    </a>
+                        </div>
+                      </div>
+                </div>
                 <div id="wrapper">
                     
-                   <div className="w-25 " ></div>
-                    <div >
+                   <div className="w-25" ></div>
+                    <div className="d-md-flex d-sm-none">
                         <Menu />
                     </div>
 
@@ -79,7 +129,8 @@ export default function Product() {
 
                             <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
 
-                                <div className="container-fluid"><button className="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i className="fas fa-bars"></i></button>
+                                <div className="container-fluid">
+                                    {/* <button className="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i className="fas fa-bars"></i></button> */}
                                     <form className="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                                         <div className="input-group"><input className="bg-light form-control border-0 small" type="text" placeholder="Search for ..." />
                                             <div className="input-group-append"><button className="btn btn-primary py-0" type="button"><i className="fas fa-search"></i></button></div>
@@ -87,7 +138,7 @@ export default function Product() {
                                     </form>
                                     <ul className="nav navbar-nav flex-nowrap ml-auto">
                                        
-                                        <div   onClick={desactiveproductGrid}>
+                                        <div   onClick={desactiveproductGrid} className="d-md-flex d-sm-none">
                                             <i className=" fa fa-list fa-lg pl-2" style={{ color: 'rouge' }}></i>
                                             <h5 className="d-inline"
                                                 style={{ position: "relative", right: "15px", bottom: "8px" }}>
